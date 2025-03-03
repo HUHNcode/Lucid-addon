@@ -4,8 +4,8 @@ import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.utils.player.ChatUtils;
+import com.example.addon.AddonTemplate;
 
 public class TestMessageModule extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -20,7 +20,7 @@ public class TestMessageModule extends Module {
     private Thread messageThread;
 
     public TestMessageModule() {
-        super(Modules.get().getCategory("Misc"), "TestMessage", "Sends 'test' message every 5 seconds.");
+        super(AddonTemplate.CATEGORY, "TestMessage", "Sends 'test' message every 5 seconds.");
     }
 
     @Override
