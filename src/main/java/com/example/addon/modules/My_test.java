@@ -1,37 +1,49 @@
 package com.example.addon.modules;
-
 import com.example.addon.AddonTemplate;
-import meteordevelopment.meteorclient.events.packets.PacketEvent;
-import meteordevelopment.meteorclient.settings.Setting;
-import meteordevelopment.meteorclient.settings.SettingGroup;
-import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.utils.player.ChatUtils;
-import meteordevelopment.orbit.EventHandler;
-import meteordevelopment.orbit.EventPriority;
-import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+import meteordevelopment.orbit.EventHandler;
+import meteordevelopment.meteorclient.events.game.ReceiveMessageEvent;
+import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.systems.modules.Category;
+import meteordevelopment.meteorclient.utils.player.ChatUtils;
 
 public class My_test extends Module {
-    private final SettingGroup sgGeneral = this.settings.getDefaultGroup(); // Default group for settings
-
     public My_test() {
-        super(AddonTemplate.CATEGORY, "ChatListener", "Hört auf Chat-Nachrichten von anderen Spielern.");
+        super(AddonTemplate.CATEGORY, "My Test", "Eine Testbeschreibung.");
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    private void onPacketReceive(PacketEvent.Receive event) {
-        // Überprüfen, ob das Paket ein ChatMessageS2CPacket ist
-        if (event.packet instanceof ChatMessageS2CPacket) {
-            ChatMessageS2CPacket packet = (ChatMessageS2CPacket) event.packet;
-            
-            // Zugriff auf die Nachricht und den Absender
-            String message = packet.body().toString();  // Zugriff auf den Body (Text der Nachricht)
-            String sender = packet.sender().toString();  // Zugriff auf den Sender (UUID)
+    @EventHandler
+    private void onMessageReceive(ReceiveMessageEvent event) {
+        if (event.getMessage() != null) {
+            String message = event.getMessage().getString();
 
-            // Nachricht im Chat anzeigen
-            ChatUtils.info(sender + ": " + message);
-            System.out.println(sender + ": " + message);
-            
+            // Verhindere Endlosschleife
+            if (!message.contains("Nachricht erhalten:")) {
+                System.out.println("Nachricht erhalten: " + message);
+                ChatUtils.info("Nachricht erhalten: " + message);
+                if (message.contains("Test")) {
+                    try {
+                        FileWriter writer = new FileWriter("/home/timon/Downloads/Meteor-Client-addon/src/main/java/com/example/addon/modules/test.txt", true);
+                        writer.write("Nachricht erhalten: " + message + "\n");
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
+
 }
+
+
+
+
+
+
+
+
+
