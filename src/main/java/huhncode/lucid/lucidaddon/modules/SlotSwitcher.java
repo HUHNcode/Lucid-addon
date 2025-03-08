@@ -1,6 +1,6 @@
-package com.example.addon.modules;
+package huhncode.lucid.lucidaddon.modules;
 
-import com.example.addon.AddonTemplate;
+import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.meteorclient.settings.*;
@@ -33,7 +33,7 @@ public class SlotSwitcher extends Module {
     );
 
     public SlotSwitcher() {
-        super(AddonTemplate.CATEGORY, "Slot Switcher", "Wechselt Slots und sendet Nachrichten einmal beim Aktivieren.");
+        super(LucidAddon.CATEGORY, "SlotSwitcher", "Wechselt Slots und sendet Nachrichten einmal beim Aktivieren.");
     }
 
     @Override

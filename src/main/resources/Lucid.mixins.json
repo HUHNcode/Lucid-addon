@@ -1,10 +1,8 @@
 {
   "required": true,
-  "package": "com.example.addon.mixin",
+  "package": "huhncode.lucid.lucidaddon.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": [
-    "ExampleMixin"
-  ],
+  "client": ["ExampleMixin"],
   "injectors": {
     "defaultRequire": 1
   }

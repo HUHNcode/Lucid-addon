@@ -1,6 +1,6 @@
-package com.example.addon.modules;
+package huhncode.lucid.lucidaddon.modules;
 
-import com.example.addon.AddonTemplate;
+import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.events.game.ReceiveMessageEvent;
 import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -88,7 +88,7 @@ public class ChatBot extends Module {
     );
 
     public ChatBot() {
-    super(AddonTemplate.CATEGORY, "ChatBot", "Automatically detects and responds to chat messages based on configurable regex patterns.");
+    super(LucidAddon.CATEGORY, "ChatBot", "Automatically detects and responds to chat messages based on configurable regex patterns.");
     }
 
 

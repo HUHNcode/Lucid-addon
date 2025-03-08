@@ -1,4 +1,4 @@
-package com.example.addon.commands;
+package huhncode.lucid.lucidaddon.commands;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

@@ -1,25 +1,19 @@
 {
   "schemaVersion": 1,
-  "id": "addon-template",
+  "id": "lucid",
   "version": "${version}",
-  "name": "Addon Template",
-  "description": "An addon template for Meteor Client addons.",
-  "authors": [
-    "seasnail"
-  ],
+  "name": "Lucid",
+  "description": "An Lucid for Meteor Client addons.",
+  "authors": ["HUHNcode"],
   "contact": {
-    "repo": "https://github.com/MeteorDevelopment/meteor-addon-template"
+    "repo": "https://github.com/MeteorDevelopment/meteor-Lucid"
   },
   "icon": "assets/template/icon.png",
   "environment": "client",
   "entrypoints": {
-    "meteor": [
-      "com.example.addon.AddonTemplate"
-    ]
+    "meteor": ["huhncode.lucid.lucidaddon.LucidAddon"]
   },
-  "mixins": [
-    "addon-template.mixins.json"
-  ],
+  "mixins": ["Lucid.mixins.json"],
   "custom": {
     "meteor-client:color": "225,25,25"
   },

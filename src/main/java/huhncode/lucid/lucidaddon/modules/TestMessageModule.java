@@ -1,11 +1,11 @@
-package com.example.addon.modules;
+package huhncode.lucid.lucidaddon.modules;
 
 import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.player.ChatUtils;
-import com.example.addon.AddonTemplate;
+import huhncode.lucid.lucidaddon.LucidAddon;
 
 public class TestMessageModule extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
@@ -20,7 +20,7 @@ public class TestMessageModule extends Module {
     private Thread messageThread;
 
     public TestMessageModule() {
-        super(AddonTemplate.CATEGORY, "TestMessage", "Sends 'test' message every 5 seconds.");
+        super(LucidAddon.CATEGORY, "TestMessage", "Sends 'test' message every 5 seconds.");
     }
 
     @Override
