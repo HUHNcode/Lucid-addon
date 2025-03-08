@@ -4,7 +4,8 @@ import com.example.addon.commands.CommandExample;
 import com.example.addon.hud.HudExample;
 import com.example.addon.modules.ModuleExample;
 import com.example.addon.modules.TestMessageModule;
-import com.example.addon.modules.My_test;
+import com.example.addon.modules.ChatBot;
+import com.example.addon.modules.SlotSwitcher;
 
 import com.mojang.logging.LogUtils;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -28,7 +29,8 @@ public class AddonTemplate extends MeteorAddon {
         // Modules
         Modules.get().add(new TestMessageModule());
         Modules.get().add(new ModuleExample());
-        Modules.get().add(new My_test());
+        Modules.get().add(new ChatBot());
+        Modules.get().add(new SlotSwitcher());
         
 
         // Commands
