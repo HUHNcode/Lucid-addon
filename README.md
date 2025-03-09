@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://github.com/user-attachments/assets/8c25e886-773b-4423-b662-2e37d4217205" alt="meteor-plus" width="300px"/>
+	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="meteor-plus" width="300px"/>
 	<h1><b>Lucid</b></h1>
 	<br>
 		An addon for <a href="https://github.com/MeteorDevelopment/meteor-client">Meteor client</a>.
