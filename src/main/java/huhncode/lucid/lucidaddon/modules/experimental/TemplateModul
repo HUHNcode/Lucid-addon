@@ -1,0 +1,27 @@
+package huhncode.lucid.lucidaddon.modules;
+
+import huhncode.lucid.lucidaddon.LucidAddon;
+import meteordevelopment.orbit.EventHandler;
+import meteordevelopment.meteorclient.settings.*;
+import meteordevelopment.meteorclient.systems.modules.Module;
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+
+public class TemplateModule extends Module {
+
+    private final SettingGroup sgGeneral = settings.getDefaultGroup();
+
+    // Hier kannst du alle notwendigen Einstellungen hinzufügen
+    private final Setting<String> exampleSetting = sgGeneral.add(new StringSetting.Builder() // MODUL SETTINGS
+        .name("Example Setting")
+        .description("Ein Beispiel für eine Einstellung.")
+        .defaultValue("default")
+        .build());
+
+    public TemplateModule() {
+        super(LucidAddon.CATEGORY, "MODULE NAME", "MODUEL BESCHREIBUNG");
+    }
+
+    // Beispiel für das Abfangen von Chat-Nachrichten oder anderen Ereignissen
+    @EventHandler
+    // HIR DIE SKIPT LOGIK
+}

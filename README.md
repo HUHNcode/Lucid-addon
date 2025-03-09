@@ -1,5 +1,4 @@
 <div align="center">
-<<<<<<< HEAD
 	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="Lucid" width="300px"/>
 	<h1><b>Lucid</b></h1>
 	<br>
@@ -8,25 +7,22 @@
 </div>
 
 ---
-=======
-	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="meteor-plus" width="300px"/>
-	<h1><b>Lucid</b></h1>
-	<br>
-		An addon for <a href="https://github.com/MeteorDevelopment/meteor-client">Meteor client</a>.
-	<br>
-</div>
-
->>>>>>> 8e7d3453e3f72ef57b11166d0d7a4606883cb1ae
 
 ## Modules
 
 Currently, Lucid includes one module (suggestions for new features are always welcome!):
 
 -   **[ChatBot](docs/ChatBot.md)**
+
     -   Automatically detects and responds to chat messages based on configurable settings.
     -   Extracts relevant messages using **regular expressions (regex)**.
     -   Filters messages based on **required and forbidden keywords**.
     -   Uses **predefined item triggers** to generate appropriate responses.
+
+-   **[ChatFonts](docs/ChatFonts.md)**
+    -   Allows you to change the font style of chat messages.
+    -   Choose from various font styles like Block, Blackletter, Bold, Script, etc.
+    -   Each font style offers a unique and customized look for your chat messages.
 
 ---
 

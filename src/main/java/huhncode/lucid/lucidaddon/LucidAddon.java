@@ -2,10 +2,11 @@ package huhncode.lucid.lucidaddon;
 
 import huhncode.lucid.lucidaddon.commands.CommandExample;
 import huhncode.lucid.lucidaddon.hud.HudExample;
-import huhncode.lucid.lucidaddon.modules.ModuleExample;
-import huhncode.lucid.lucidaddon.modules.TestMessageModule;
+//import huhncode.lucid.lucidaddon.modules.TestMessageModule;
+//import huhncode.lucid.lucidaddon.modules.ModuleExample;
+//import huhncode.lucid.lucidaddon.modules.SlotSwitcher;
 import huhncode.lucid.lucidaddon.modules.ChatBot;
-import huhncode.lucid.lucidaddon.modules.SlotSwitcher;
+import huhncode.lucid.lucidaddon.modules.ChatFonts;
 
 import com.mojang.logging.LogUtils;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -27,11 +28,11 @@ public class LucidAddon extends MeteorAddon {
         LOG.info("Initializing Meteor Lucid");
 
         // Modules
-        Modules.get().add(new TestMessageModule());
-        Modules.get().add(new ModuleExample());
+        //Modules.get().add(new TestMessageModule());
+        //Modules.get().add(new ModuleExample());
+        //Modules.get().add(new SlotSwitcher());
         Modules.get().add(new ChatBot());
-        Modules.get().add(new SlotSwitcher());
-        
+        Modules.get().add(new ChatFonts());
 
         // Commands
         Commands.add(new CommandExample());

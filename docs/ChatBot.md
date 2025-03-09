@@ -23,6 +23,8 @@ This module is highly customizable, allowing users to fine-tune message detectio
 
 The module provides several settings that allow users to adjust how messages are detected and processed.
 
+---
+
 ### **1. Message Regex**
 
 -   **Description**:  
@@ -31,12 +33,22 @@ The module provides several settings that allow users to adjust how messages are
 
 -   **Example Usage**:  
     If the chat message follows this format:
+
     ```
     [Server] Steve › I want to buy diamonds
     ```
+
     Using the regex `"\\[Server\\] PLAYER › "` will extract:
+
     -   **Player**: `Steve`
     -   **Message**: `I want to buy diamonds`
+
+-   **Additional Information**:  
+    For more information about regex, you can refer to useful regex resources or ask ChatGPT (or any other chat AI). Here’s a brief overview of some common regex patterns:
+    -   `.*`: Matches any character (except for line terminators) zero or more times.
+    -   `\s`: Matches any whitespace character (spaces, tabs, line breaks).
+    -   `.`: Matches any character except for line breaks.
+    -   `...`: You can use multiple dots or other patterns to refine your match further.
 
 ---
 
