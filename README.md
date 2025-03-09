@@ -1,6 +1,11 @@
-# Meteor Lucid
+<div align="center">
+	<img src="https://github.com/user-attachments/assets/8c25e886-773b-4423-b662-2e37d4217205" alt="meteor-plus" width="300px"/>
+	<h1><b>Lucid</b></h1>
+	<br>
+		An addon for <a href="https://github.com/MeteorDevelopment/meteor-client">Meteor client</a>.
+	<br>
+</div>
 
-A template to allow easy usage of the Meteor Addon API.
 
 ### How to use
 
