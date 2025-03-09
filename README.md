@@ -1,85 +1,41 @@
-# Meteor Lucid
+<div align="center">
+	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="Lucid" width="300px"/>
+	<h1><b>Lucid</b></h1>
+	<br>
+	<em>A lightweight addon for the <a href="https://github.com/MeteorDevelopment/meteor-client">Meteor Client</a>.</em>
+	<br>
+</div>
 
-A template to allow easy usage of the Meteor Addon API.
+---
 
-### How to use
+## Modules
 
--   Clone this project
--   Use this template to create new modules/commands
--   Build the executable using the gradle `build` task.
--   Run the mod with Meteor.
+Currently, Lucid includes one module (suggestions for new features are always welcome!):
 
-### Project structure
+-   **[ChatBot](docs/ChatBot.md)**
+    -   Automatically detects and responds to chat messages based on configurable settings.
+    -   Extracts relevant messages using **regular expressions (regex)**.
+    -   Filters messages based on **required and forbidden keywords**.
+    -   Uses **predefined item triggers** to generate appropriate responses.
 
-```text
-.
-│── .github
-│   ╰── workflows
-│       │── dev_build.yml
-│       ╰── pull_request.yml
-│── gradle
-│   ╰── wrapper
-│       │── gradle-wrapper.jar
-│       ╰── gradle-wrapper.properties
-│── src
-│   ╰── main
-│       │── java
-│       │   ╰── com
-│       │       ╰── example
-│       │           ╰── addon
-│       │               │── commands
-│       │               │   ╰── CommandExample
-│       │               │── hud
-│       │               │   ╰── HudExample
-│       │               │── modules
-│       │               │   ╰── ModuleExample
-│       │               ╰── LucidAddon
-│       ╰── resources
-│           │── assets
-│           │   ╰── template
-│           │       ╰── icon.png
-│           │── Lucid.mixins.json
-│           ╰── fabric.mod.json
-│── .editorconfig
-│── .gitignore
-│── build.gradle
-│── gradle.properties
-│── gradlew
-│── gradlew.bat
-│── LICENSE
-│── README.md
-╰── settings.gradle
-```
+---
 
-This is the default project structure. Each folder/file has a specific purpose.  
-Here is a brief explanation of the ones you might need to modify:
+## Installation Guide
 
--   `.github/workflows`: Contains the GitHub Actions configuration files.
--   `gradle`: Contains the Gradle wrapper files.  
-    Edit the `gradle.properties` file to change the version of the Gradle wrapper.
--   `src/main/java/com/example/addon`: Contains the main class of the addon.  
-    Here you can register your custom commands, modules, and HUDs.  
-    Edit the `getPackage` method to reflect the package of your addon.
--   `src/main/resources`: Contains the resources of the addon.
-    -   `assets`: Contains the assets of the addon.  
-        You can add your own assets here, separated in subfolders.
-        -   `template`: Contains the assets of the template.  
-            You can replace the `icon.png` file with your own addon icon.  
-            Also, rename this folder to reflect the name of your addon.
-    -   `Lucid.mixins.json`: Contains the Mixin configuration for the addon.  
-        You can add your own mixins in the `client` array.
-    -   `fabric.mod.json`: Contains the metadata of the addon.  
-        Edit the various fields to reflect the metadata of your addon.
--   `build.gradle.kts`: Contains the Gradle build script.  
-    You can manage the dependencies of the addon here.  
-    Remember to keep the `fabric-loom` version up-to-date.
--   `gradle.properties.kts`: Contains the properties of the Gradle build.  
-    These will be used by the build script.
--   `LICENSE`: Contains the license of the addon.  
-    You can edit this file to change the license of your addon.
--   `README.md`: Contains the documentation of the addon.  
-    You can edit this file to reflect the documentation of your addon, and showcase its features.
+1. Install [Minecraft](https://www.minecraft.net)
+2. Install [Fabric](https://fabricmc.net) and [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) for your Minecraft version
+3. Download [Meteor Client](https://meteorclient.com) for your Minecraft version
+4. Download [Lucid](https://github.com/HUHNcode/Lucid/releases) for your Minecraft version
+5. Place both the **Meteor Client** and **Lucid** in your `mods` folder
+
+---
+
+## Contributing
+
+Feel free to open issues or submit pull requests if you have suggestions or improvements!
+
+---
 
 ## License
 
-This template is available under the CC0 license. Feel free to use it for your own projects.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
