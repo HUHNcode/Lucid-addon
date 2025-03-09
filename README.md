@@ -1,4 +1,5 @@
 <div align="center">
+<<<<<<< HEAD
 	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="Lucid" width="300px"/>
 	<h1><b>Lucid</b></h1>
 	<br>
@@ -7,6 +8,15 @@
 </div>
 
 ---
+=======
+	<img src="https://github.com/user-attachments/assets/e071cc52-3c46-45d5-b561-a593f777af4f" alt="meteor-plus" width="300px"/>
+	<h1><b>Lucid</b></h1>
+	<br>
+		An addon for <a href="https://github.com/MeteorDevelopment/meteor-client">Meteor client</a>.
+	<br>
+</div>
+
+>>>>>>> 8e7d3453e3f72ef57b11166d0d7a4606883cb1ae
 
 ## Modules
 
