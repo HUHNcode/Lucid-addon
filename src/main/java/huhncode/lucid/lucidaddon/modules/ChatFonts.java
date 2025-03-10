@@ -134,11 +134,22 @@ public class ChatFonts extends Module {
 
     private String convertText(String message, FontStyle style) {
         Map<Character, String> fontMap = getFontMap(style);
-        if (fontMap == null) return message; // Falls die Schriftart nicht existiert
+        if (fontMap == null) return message; 
 
         StringBuilder converted = new StringBuilder();
-        for (char c : message.toLowerCase().toCharArray()) {
-            converted.append(fontMap.getOrDefault(c, String.valueOf(c))); // Ersetze Zeichen
+        boolean escapeNext = false;
+
+        for (char c : message.toCharArray()) {
+            if (c == '\\') {
+                escapeNext = true;
+            } else {
+                if (escapeNext) {
+                    converted.append(c); 
+                    escapeNext = false;
+                } else {
+                    converted.append(fontMap.getOrDefault(Character.toLowerCase(c), String.valueOf(c)));
+                }
+            }
         }
         return converted.toString();
     }

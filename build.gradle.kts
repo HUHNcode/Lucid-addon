@@ -44,6 +44,7 @@ tasks {
         }
     }
 
+
     jar {
         val licenseSuffix = project.base.archivesName.get()
         from("LICENSE") {

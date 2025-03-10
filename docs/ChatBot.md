@@ -1,10 +1,10 @@
-# **Lucid Addon - ChatBot Module Documentation**
+# **Lucid Addon - ChatBot Module Documentation (Extended)**
 
 ## **Overview**
 
 The **ChatBot** module in the **Lucid Addon** automatically detects and responds to chat messages based on configurable settings. It extracts relevant messages using **regular expressions (regex)**, filters them according to **needed and forbidden keywords**, and searches for **predefined item triggers** to generate appropriate replies.
 
-This module is highly customizable, allowing users to fine-tune message detection, response timing, and keyword filtering.
+This module is highly customizable, allowing users to fine-tune message detection, response timing, keyword filtering, and now even the customizable output message format.
 
 ---
 
@@ -16,6 +16,8 @@ This module is highly customizable, allowing users to fine-tune message detectio
 -   **Keyword filtering**: Messages can be required to contain certain words while avoiding forbidden ones.
 -   **Smart Mode**: Dynamically detects keywords within specific sections of a message.
 -   **Notifications**: Plays a sound and displays a toast notification when a matching message is found.
+-   **Customizable output message format**: Users can now configure the reply message format with placeholders such as **`TRIGGER`** and **`OUTPUT`**.
+-   **Customizable response command**: Users can now fully customize the response command, such as changing from `/msg PLAYER TRIGGER for OUTPUT` to any command format, including placeholders for **`PLAYER`**, **`TRIGGER`**, and **`OUTPUT`**.
 
 ---
 
@@ -109,7 +111,24 @@ The module provides several settings that allow users to adjust how messages are
 
 ---
 
-### **6. Trigger and Outputs (Item Data)**
+### **6. Custom Output Message Format**
+
+    Users can fully customize the **Output Message**. For example, if you want the bot to respond with a different command such as `/message PLAYER TRIGGER for OUTPUT` instead of `/msg PLAYER TRIGGER for OUTPUT`, you can set the response format in the **Custom Output Message Format** field.
+
+    -   **Example**:
+
+        ```
+        "/message PLAYER TRIGGER for OUTPUT"
+        ```
+
+    -   The response will now be:
+        ```
+        /message Steve iron for 20c/block stack
+        ```
+
+---
+
+### **7. Trigger and Outputs (Item Data)**
 
 -   **Description**:  
     Defines **item triggers** and their corresponding **responses**.
@@ -167,10 +186,7 @@ If the message is valid, the bot:
 If an item is found:
 
 1. The bot **displays a toast notification** and **plays a sound**.
-2. After the **configured delay**, it sends a message to the player using:
-    ```
-    /msg <player> <item> for <price>
-    ```
+2. After the **configured delay**, it sends a message to the player using the **customizable output format** with **TRIGGER** and **OUTPUT** placeholders, and the **customizable response command**.
 
 ---
 
@@ -200,6 +216,10 @@ Checks if any forbidden word is present in the message.
 
 Searches for item triggers and returns the corresponding response.
 
+### **6. `generateCustomResponse(String trigger, String output)`**
+
+Generates a response based on the **custom output format** using the **TRIGGER** and **OUTPUT** placeholders, and allows for customizable response commands.
+
 ---
 
 ## **Example Use Cases**
@@ -211,6 +231,7 @@ Searches for item triggers and returns the corresponding response.
 -   `neededKeywords = ["buy"]`
 -   `forbiddenKeywords = ["sell"]`
 -   `itemData = ["diamonds,Dias;30c/stack"]`
+-   `outputMessage = "TRIGGER for OUTPUT"`
 
 #### **Incoming Chat Message**
 
@@ -226,13 +247,14 @@ Alex › I want to buy diamonds
 
 ---
 
-### **Example 2: Smart Mode in Action**
+### **Example 2: Custom Output Message**
 
 #### **Configuration**
 
 -   `neededKeywords = ["buy"]`
 -   `forbiddenKeywords = ["not"]`
 -   `itemData = ["obsidian,obi;15c/stack"]`
+-   `outputMessage = "TRIGGER for OUTPUT"`
 -   **Smart Mode ON**
 
 #### **Incoming Chat Message**
@@ -247,4 +269,48 @@ Steve › I want to buy obsidian but not emeralds.
 /msg Steve obsidian for 15c/stack
 ```
 
-(_Emeralds are ignored because they appear after the forbidden keyword "not."_)
+---
+
+### **Example 3: Customizing the Message Format**
+
+#### **Configuration**
+
+-   `neededKeywords = ["buy"]`
+-   `forbiddenKeywords = ["not"]`
+-   `itemData = ["lapis,lapis block;25c/block stack"]`
+-   `outputMessage = "You are buying TRIGGER for OUTPUT!"`
+
+#### **Incoming Chat Message**
+
+```
+Steve › I want to buy lapis block.
+```
+
+#### **Bot Response**
+
+```
+/msg Steve You are buying lapis block for 25c/block stack!
+```
+
+---
+
+### **Example 4: Customizing the Response Command**
+
+#### **Configuration**
+
+-   `neededKeywords = ["buy"]`
+-   `forbiddenKeywords = ["not"]`
+-   `itemData = ["iron,iron block;20c/block stack"]`
+-   `outputMessage = "/message PLAYER TRIGGER for OUTPUT"`
+
+#### **Incoming Chat Message**
+
+```
+Steve › I want to buy iron block.
+```
+
+#### **Bot Response**
+
+```
+/message Steve iron for 20c/block stack
+```

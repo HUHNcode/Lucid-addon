@@ -17,11 +17,10 @@ public class ChatBot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
     // This setting defines the message format. The placeholder "PLAYER" will be replaced by a regex group.
-    // Default: "<PLAYER>\s"
     private final Setting<String> messageRegex = sgGeneral.add(new StringSetting.Builder()
             .name("Message regex")
             .description("Regex to extract player and message. Everything after the match becomes the message. Use 'PLAYER' as placeholder for the player's name.")
-            .defaultValue(".*\\sPLAYER\\s›\\s")
+            .defaultValue("<PLAYER>\\s")
             .build()
     );
 
@@ -56,41 +55,26 @@ public class ChatBot extends Module {
             .build()
     );
 
+    // New setting for customizing the output message format (entire message structure).
+    private final Setting<String> customOutputMessage = sgGeneral.add(new StringSetting.Builder()
+            .name("Custom output message")
+            .description("Customize the message format. Use placeholders TRIGGER and OUTPUT. You can also customize the message prefix (e.g., '/msg PLAYER').")
+            .defaultValue("/msg PLAYER i am selling TRIGGER for OUTPUT")
+            .build()
+    );
+
     private final Setting<List<String>> itemData = sgGeneral.add(new StringListSetting.Builder()
             .name("Trigger and outputs")
             .description("Format: \"trigger1,trigger2;output\". No default values.")
             .defaultValue(List.of(
-            "Diamonds,Dias;30c/stack",
-            "xp bottles,xp;20c/stack",
-            "emerald blocks,ems,emblocks;35c/block stack",
-            "iron block,iron;20c/block stack",
-            "lapis block,lapislazuli,lapis;25c/block stack",
-            "obsidian,obi,oby;15c/stack",
-            "redstone blocks,redstone;20c/block stack",
-            "wood,logs;5c/stack",
-            "bookshelfs;20c/stack",
-            "endcrystal,crystals;35c/stack",
-            "extra hearts,hearts,heart;5c",
-            "books;8c/stack",
-            "netherite scraps,scraps;5c",
-            "netherite ingot,netherite;20c",
-            "nether upgrade,Smithing Template;10c",
-            "pot shulk,potion,pots;10c/shulk",
-            "player head,head;5c",
-            "enchanted book,ebook;5c",
-            "golden carrots,gcarrots,carrots,food;10c/stack",
-            "steak,food;5c/stack",
-            "bread,food;2c/stack",
-            "gset,g set;35c",
-            "totem shulk,totems;5c/shulk",
-            "shells;15c/stack"))
+                "Diamonds,Dias;25$/stack",
+                "Emeralds,Ems;10$/stack"))
             .build()
     );
 
     public ChatBot() {
-    super(LucidAddon.CATEGORY, "ChatBot", "Automatically detects and responds to chat messages based on configurable regex patterns.");
+        super(LucidAddon.CATEGORY, "ChatBot", "Automatically detects and responds to chat messages based on configurable regex patterns.");
     }
-
 
     @EventHandler
     private void onMessageReceive(ReceiveMessageEvent event) {
@@ -103,22 +87,34 @@ public class ChatBot extends Module {
             String price = extractedInfo.getValue().getValue();
 
             mc.execute(() -> {
-                mc.getToastManager().add(new SystemToast(SystemToast.Type.PERIODIC_NOTIFICATION, Text.of(sender), Text.of(word + " for " + price)));
+
+                String outputMessage = customOutputMessage.get()
+                        .replace("PLAYER", sender)  // Replace PLAYER with the actual sender
+                        .replace("TRIGGER", word)    // Replace TRIGGER with the matched keyword
+                        .replace("OUTPUT", price);   // Replace OUTPUT with the item price
+                
+                
+                mc.getToastManager().add(new SystemToast(SystemToast.Type.PERIODIC_NOTIFICATION, Text.of(sender), Text.of(outputMessage)));
                 mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
             });
 
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    ChatUtils.sendPlayerMsg("/msg " + sender + " " + word + " for " + price);
+                    // Use the custom message format with placeholders TRIGGER and OUTPUT, and allow full customization of the message prefix.
+                    String outputMessage = customOutputMessage.get()
+                        .replace("PLAYER", sender)  // Replace PLAYER with the actual sender
+                        .replace("TRIGGER", word)    // Replace TRIGGER with the matched keyword
+                        .replace("OUTPUT", price);   // Replace OUTPUT with the item price
+
+                    // Send the customized message
+                    ChatUtils.sendPlayerMsg(outputMessage);
+                    
                 }
             }, (long)(delay.get() * 1000));
         }
     }
 
-    // Parses the message using the regex setting.
-    // Replaces "PLAYER" with a capturing group that matches one or more word characters.
-    // Everything after the match is considered the message content.
     private Map.Entry<String, String> parseMessage(String message) {
         String regex = messageRegex.get().replace("PLAYER", "(\\w+)");
         Pattern pattern = Pattern.compile(regex);
@@ -131,7 +127,6 @@ public class ChatBot extends Module {
         return null;
     }
 
-    // Extracts the sender and item info from the message.
     private Map.Entry<String, Map.Entry<String, String>> extractMessageInfo(String message) {
         Map.Entry<String, String> parsed = parseMessage(message);
         if (parsed == null) return null;
@@ -141,7 +136,6 @@ public class ChatBot extends Module {
         return (itemInfo != null) ? new AbstractMap.SimpleEntry<>(sender, itemInfo) : null;
     }
 
-    // In smart mode, finds the first needed keyword and then searches in the text after it (up to a forbidden keyword, if present).
     private Map.Entry<String, String> findItemSmart(String message) {
         List<String> needed = neededKeywords.get();
         List<String> forbidden = forbiddenKeywords.get();
@@ -171,7 +165,6 @@ public class ChatBot extends Module {
         return findMatchingItem(searchArea);
     }
 
-    // Checks if any forbidden keyword is present in the message.
     private boolean containsForbiddenKeyword(String message) {
         for (String forbiddenWord : forbiddenKeywords.get()) {
             if (message.contains(forbiddenWord)) return true;
@@ -179,7 +172,6 @@ public class ChatBot extends Module {
         return false;
     }
 
-    // Searches for a matching item in the text and returns the trigger and output as a pair.
     private Map.Entry<String, String> findMatchingItem(String text) {
         for (String itemEntry : itemData.get()) {
             String[] itemParts = itemEntry.split(";");
