@@ -1,4 +1,3 @@
 #TO DO
 
--   in my test die stettin übersichtlich machen + bescheibungen hinzufügen
--   personalisiren (rename all vars)
+-   in ChatBot die komplete output msg konfigurirbar machen (auch /msg befhel usw)
