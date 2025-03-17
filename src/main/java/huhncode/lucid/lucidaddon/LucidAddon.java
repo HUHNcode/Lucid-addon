@@ -8,6 +8,7 @@ import huhncode.lucid.lucidaddon.hud.HudExample;
 import huhncode.lucid.lucidaddon.modules.ChatBot;
 import huhncode.lucid.lucidaddon.modules.ChatFonts;
 import huhncode.lucid.lucidaddon.modules.AfkDetector;
+import huhncode.lucid.lucidaddon.modules.AutoGG;
 
 import com.mojang.logging.LogUtils;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -35,6 +36,7 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new ChatBot());
         Modules.get().add(new ChatFonts());
         Modules.get().add(new AfkDetector());
+        Modules.get().add(new AutoGG());
 
         // Commands
         Commands.add(new CommandExample());

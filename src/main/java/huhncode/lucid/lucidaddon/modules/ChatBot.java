@@ -38,8 +38,7 @@ public class ChatBot extends Module {
     // Range: 0s (deaktiviert) bis 300s (5 Minuten), Standard: 10s.
     private final Setting<Double> duplicateDelay = sgGeneral.add(new DoubleSetting.Builder()
             .name("Duplicate prevention delay")
-            .description("Mindestzeit (in Sekunden), die zwischen dem Senden derselben Bot-Nachricht an denselben Spieler liegen mu
-            ss. 0 deaktiviert diese Überprüfung.")
+            .description("Mindestzeit (in Sekunden), die zwischen dem Senden derselben Bot-Nachricht an denselben Spieler liegen muss. 0 deaktiviert diese Überprüfung.")
             .defaultValue(10.0)
             .min(0)
             .sliderMax(300)
