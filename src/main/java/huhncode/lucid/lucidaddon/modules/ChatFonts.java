@@ -2,6 +2,7 @@ package huhncode.lucid.lucidaddon.modules;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.events.game.SendMessageEvent;
+import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.EnumSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
@@ -14,14 +15,23 @@ import java.util.Map;
 public class ChatFonts extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    
     private final Setting<FontStyle> fontStyle = sgGeneral.add(new EnumSetting.Builder<FontStyle>()
             .name("font-style")
             .description("Select the font style for chat messages.")
             .defaultValue(FontStyle.BLOCK)
             .build()
     );
+    
+    private final Setting<Boolean> applyFromSyntax = sgGeneral.add(new BoolSetting.Builder()
+            .name("apply-from-syntax")
+            .description("Apply font only between $f markers. (Beginwhit $f and optionally end with $f)")
+            .defaultValue(true)
+            .build()
+    );
 
-    // Maps for different fonts
+    private static final String SYNTAX_MARKER = "$f";
+    
     private static final Map<Character, String> BLOCK_MAP = new HashMap<>();
     private static final Map<Character, String> BLACKLETTER_MAP = new HashMap<>();
     private static final Map<Character, String> BOLD_MAP = new HashMap<>();
@@ -30,13 +40,6 @@ public class ChatFonts extends Module {
     private static final Map<Character, String> CIRCLED_MAP = new HashMap<>();
     private static final Map<Character, String> SQUARED_MAP = new HashMap<>();
     private static final Map<Character, String> REGIONAL_MAP = new HashMap<>();
-    private static final Map<Character, String> SUBSCRIPT_MAP = new HashMap<>();
-    private static final Map<Character, String> FRAKTUR_MAP = new HashMap<>();
-    private static final Map<Character, String> DOUBLESTRUCK2_MAP = new HashMap<>();
-    private static final Map<Character, String> SCRIPT2_MAP = new HashMap<>();
-    private static final Map<Character, String> SMALLCAPS_MAP = new HashMap<>();
-    private static final Map<Character, String> CIRCLED2_MAP = new HashMap<>();
-    private static final Map<Character, String> SQUARED2_MAP = new HashMap<>();
     
     static {
         // Block font mapping
@@ -118,59 +121,70 @@ public class ChatFonts extends Module {
         for (int i = 0; i < letters.length; i++) {
             REGIONAL_MAP.put(letters[i], regionalLetters[i]);
         }
-
-        // Add more fonts here (Fraktur, Small Caps, etc.) by following similar patterns
-        // You can continue adding the remaining fonts here, just follow the above pattern.
     }
-
+    
     public ChatFonts() {
         super(LucidAddon.CATEGORY, "Chat Fonts", "Modify your chat messages with different fonts.");
     }
 
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
-        event.message = convertText(event.message, fontStyle.get());
+        event.message = convertText(event.message, fontStyle.get(), applyFromSyntax.get());
+        System.out.println("Converted Message: " + event.message); // Debug-Ausgabe
     }
 
-    private String convertText(String message, FontStyle style) {
+    private String convertText(String message, FontStyle style, boolean applyFromSyntax) {
         Map<Character, String> fontMap = getFontMap(style);
-        if (fontMap == null) return message; 
-
-        StringBuilder converted = new StringBuilder();
-        boolean escapeNext = false;
-
-        for (char c : message.toCharArray()) {
-            if (c == '\\') {
-                escapeNext = true;
-            } else {
-                if (escapeNext) {
-                    converted.append(c); 
-                    escapeNext = false;
-                } else {
-                    converted.append(fontMap.getOrDefault(Character.toLowerCase(c), String.valueOf(c)));
+        if (fontMap == null) return message;
+        
+        if (applyFromSyntax) {
+            StringBuilder result = new StringBuilder();
+            int index = 0;
+            boolean applyingFont = false;
+            
+            while (index < message.length()) {
+                int markerIndex = message.indexOf(SYNTAX_MARKER, index);
+                if (markerIndex == -1) {
+                    // Wenn kein Marker mehr gefunden wird, füge den Rest des Texts hinzu
+                    result.append(applyingFont ? applyFont(message.substring(index), fontMap) : message.substring(index));
+                    break;
                 }
+
+                // Text vor dem Marker
+                result.append(applyingFont ? applyFont(message.substring(index, markerIndex), fontMap) : message.substring(index, markerIndex));
+                // Toggle den Status der Formatierung
+                applyingFont = !applyingFont;
+                // Springe über den Marker
+                index = markerIndex + SYNTAX_MARKER.length();
             }
+            return result.toString();
+        }
+
+        return applyFont(message, fontMap);
+    }
+
+    private String applyFont(String text, Map<Character, String> fontMap) {
+        StringBuilder converted = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            converted.append(fontMap.getOrDefault(Character.toLowerCase(c), String.valueOf(c)));
         }
         return converted.toString();
     }
 
     private Map<Character, String> getFontMap(FontStyle style) {
-        switch (style) {
-            case BLOCK: return BLOCK_MAP;
-            case BLACKLETTER: return BLACKLETTER_MAP;
-            case BOLD: return BOLD_MAP;
-            case SCRIPT: return SCRIPT_MAP;
-            case DOUBLESTRUCK: return DOUBLESTRUCK_MAP;
-            case CIRCLED: return CIRCLED_MAP;
-            case SQUARED: return SQUARED_MAP;
-            case REGIONAL: return REGIONAL_MAP;
-            // Continue for additional fonts here
-            default: return BLOCK_MAP; // Standard Schriftart
-        }
+        return switch (style) {
+            case BLOCK -> BLOCK_MAP;
+            case BLACKLETTER -> BLACKLETTER_MAP;
+            case BOLD -> BOLD_MAP;
+            case SCRIPT -> SCRIPT_MAP;
+            case DOUBLESTRUCK -> DOUBLESTRUCK_MAP;
+            case CIRCLED -> CIRCLED_MAP;
+            case SQUARED -> SQUARED_MAP;
+            case REGIONAL -> REGIONAL_MAP;
+        };
     }
 
     public enum FontStyle {
         BLOCK, BLACKLETTER, BOLD, SCRIPT, DOUBLESTRUCK, CIRCLED, SQUARED, REGIONAL
-        // Add new fonts to the enum here as needed
     }
 }

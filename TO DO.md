@@ -1,3 +1,6 @@
 #TO DO
 
--   in ChatBot die komplete output msg konfigurirbar machen (auch /msg befhel usw)
+-   chat fonts: fonts in msg möglich machen
+-   module: afk kick
+-   module: better macros (cursor palziren)
+-   autototem + (random delay to prevent anti cheat)

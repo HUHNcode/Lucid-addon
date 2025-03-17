@@ -12,7 +12,8 @@ This module is highly customizable, allowing users to fine-tune message detectio
 
 -   **Regex-based message extraction**: Captures player names and messages using a customizable regex pattern.
 -   **Automated replies**: Sends predefined responses based on detected items.
--   **Configurable delay**: Controls the time before responding to messages.
+-   **Configurable delays**: Controls the time before responding to messages.
+-   **Duplicate message delay**: Prevents the bot from sending the same response to the same player within a configurable time frame.
 -   **Keyword filtering**: Messages can be required to contain certain words while avoiding forbidden ones.
 -   **Smart Mode**: Dynamically detects keywords within specific sections of a message.
 -   **Notifications**: Plays a sound and displays a toast notification when a matching message is found.
@@ -40,17 +41,10 @@ The module provides several settings that allow users to adjust how messages are
     [Server] Steve › I want to buy diamonds
     ```
 
-    Using the regex `"\\[Server\\] PLAYER › "` will extract:
+    Using the regex "\\[Server\\] PLAYER › " will extract:
 
     -   **Player**: `Steve`
     -   **Message**: `I want to buy diamonds`
-
--   **Additional Information**:  
-    For more information about regex, you can refer to useful regex resources or ask ChatGPT (or any other chat AI). Here’s a brief overview of some common regex patterns:
-    -   `.*`: Matches any character (except for line terminators) zero or more times.
-    -   `\s`: Matches any whitespace character (spaces, tabs, line breaks).
-    -   `.`: Matches any character except for line breaks.
-    -   `...`: You can use multiple dots or other patterns to refine your match further.
 
 ---
 
@@ -62,73 +56,43 @@ The module provides several settings that allow users to adjust how messages are
 
 ---
 
-### **3. Needed Keywords**
+### **3. Duplicate Message Delay**
+
+-   **Default Value**: `10` seconds (0 disables this feature)
+-   **Range**: `0s - 5min`
+-   **Description**:  
+    Prevents the bot from sending the same response to the same player with the same message within a configurable time frame. If the delay has expired and the player sends the same message again, the bot will respond and reset the delay timer.
+
+---
+
+### **4. Needed Keywords**
 
 -   **Description**:  
     Messages **must** contain at least one of these keywords to be processed.
 
--   **Example**:  
-    If `neededKeywords = ["buy"]`, the message:
-    ```
-    Does anyone sell diamonds?
-    ```
-    will be ignored, but:
-    ```
-    I want to buy diamonds.
-    ```
-    will be processed.
-
 ---
 
-### **4. Forbidden Keywords**
+### **5. Forbidden Keywords**
 
 -   **Description**:  
     Messages containing **any** of these words will be ignored.
 
--   **Example**:  
-    If `forbiddenKeywords = ["sell"]`, the message:
-    ```
-    I want to sell diamonds.
-    ```
-    will be ignored.
-
 ---
 
-### **5. Smart Keyword Detection**
+### **6. Smart Keyword Detection**
 
 -   **Description**:
-
     -   When enabled, the bot **only searches for items after a needed keyword** and **ignores text after a forbidden keyword**.
-    -   When disabled, the bot checks the entire message.
-
--   **Example**:  
-    With `neededKeywords = ["buy"]` and `forbiddenKeywords = ["not"]`:
-    ```
-    I want to buy diamonds but not obsidian.
-    ```
-    -   **Smart Mode ON** → Only detects **"diamonds"**.
-    -   **Smart Mode OFF** → Detects both **"diamonds"** and **"obsidian"**.
 
 ---
 
-### **6. Custom Output Message Format**
+### **7. Custom Output Message Format**
 
-    Users can fully customize the **Output Message**. For example, if you want the bot to respond with a different command such as `/message PLAYER TRIGGER for OUTPUT` instead of `/msg PLAYER TRIGGER for OUTPUT`, you can set the response format in the **Custom Output Message Format** field.
-
-    -   **Example**:
-
-        ```
-        "/message PLAYER TRIGGER for OUTPUT"
-        ```
-
-    -   The response will now be:
-        ```
-        /message Steve iron for 20c/block stack
-        ```
+Users can fully customize the **Output Message**. For example, if you want the bot to respond with a different command such as `/message PLAYER TRIGGER for OUTPUT` instead of `/msg PLAYER TRIGGER for OUTPUT`, you can set the response format in the **Custom Output Message Format** field.
 
 ---
 
-### **7. Trigger and Outputs (Item Data)**
+### **8. Trigger and Outputs (Item Data)**
 
 -   **Description**:  
     Defines **item triggers** and their corresponding **responses**.
@@ -138,18 +102,6 @@ The module provides several settings that allow users to adjust how messages are
     ```
     "trigger1,trigger2;response"
     ```
-
-    -   **Triggers**: Words that trigger the bot’s response.
-    -   **Response**: Message sent when a trigger is found.
-
--   **Example**:
-    ```
-    "iron,iron block;20c/block stack"
-    ```
-    -   If someone says, "I want to buy iron," the bot replies:
-        ```
-        /msg <player> iron for 20c/block stack
-        ```
 
 ---
 
@@ -161,16 +113,12 @@ The module provides several settings that allow users to adjust how messages are
     -   The **player’s name**.
     -   The **message content**.
 
----
-
 ### **2. Filtering Messages**
 
 The bot **ignores** messages that:
 
 1. **Do not contain any needed keywords** (if configured).
 2. **Contain a forbidden keyword** (if configured).
-
----
 
 ### **3. Item Detection**
 
@@ -179,14 +127,14 @@ If the message is valid, the bot:
 -   Checks for **matching item triggers** in the text.
 -   Uses **Smart Mode** (if enabled) to find keywords only in relevant parts of the message.
 
----
-
 ### **4. Sending a Response**
 
 If an item is found:
 
 1. The bot **displays a toast notification** and **plays a sound**.
 2. After the **configured delay**, it sends a message to the player using the **customizable output format** with **TRIGGER** and **OUTPUT** placeholders, and the **customizable response command**.
+
+Additionally, the bot ensures that the same message is not sent to the same player again within the **Duplicate Message Delay** period.
 
 ---
 
