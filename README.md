@@ -12,17 +12,34 @@
 
 Currently, Lucid includes one module (suggestions for new features are always welcome!):
 
--   **[ChatBot](docs/ChatBot.md)**
+-   **[Chat Bot](docs/ChatBot.md)**
 
     -   Automatically detects and responds to chat messages based on configurable settings.
     -   Extracts relevant messages using **regular expressions (regex)**.
     -   Filters messages based on **required and forbidden keywords**.
     -   Uses **predefined item triggers** to generate appropriate responses.
 
--   **[ChatFonts](docs/ChatFonts.md)**
+-   **[Chat Fonts](docs/ChatFonts.md)**
+
     -   Allows you to change the font style of chat messages.
     -   Choose from various font styles like Block, Blackletter, Bold, Script, etc.
     -   Each font style offers a unique and customized look for your chat messages.
+
+-   **AFK Log**
+
+    -   Automatically logs you out after being AFK for a configured delay.
+    -   Detects inactivity based on movement.
+    -   Option to disable **AutoReconnect** upon logout.
+
+-   **Auto GG**
+
+    -   Automatically sends a **GG message** after a kill.
+    -   Supports random or predefined messages.
+    -   Option to send the message privately as **/msg**.
+
+-   **Auto Totem**
+    -   Automatically equips a **Totem of Undying** when one is consumed.
+    -   **Random delay** to bypass anti-cheat systems.
 
 ---
 

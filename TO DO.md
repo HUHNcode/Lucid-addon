@@ -1,6 +1,6 @@
 # TO DO
 
 -   [ ] chat fonts: fonts in msg möglich machen
--   [ ] module: afk kick
+-   [x] module: afk kick
 -   [ ] module: better macros (cursor place)
 -   [x] autototem + (random delay to prevent anti cheat)
