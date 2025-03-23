@@ -6,15 +6,21 @@ import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.orbit.EventHandler;
+import meteordevelopment.meteorclient.MeteorClient;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 import net.minecraft.sound.SoundEvents;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatBot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
+    private static final Path CONFIG_PATH = MeteorClient.FOLDER.toPath().resolve("Lucid/ChatBot.config");
 
     // Regex zum Extrahieren von Spieler und Nachricht (Platzhalter PLAYER wird ersetzt)
     private final Setting<String> messageRegex = sgGeneral.add(new StringSetting.Builder()
@@ -77,9 +83,7 @@ public class ChatBot extends Module {
     private final Setting<List<String>> itemData = sgGeneral.add(new StringListSetting.Builder()
             .name("Trigger and outputs")
             .description("Format: \"trigger1,trigger2;output\". Keine Standardwerte.")
-            .defaultValue(List.of(
-                "Diamonds,Dias;25$/stack",
-                "Emeralds,Ems;10$/stack"))
+            .defaultValue(loadItemData())
             .build()
     );
 
@@ -202,6 +206,34 @@ public class ChatBot extends Module {
                 }
             }
         }
-        return null;
+        return null;    
     }
+
+    private static List<String> loadItemData() {
+        if (!Files.exists(CONFIG_PATH)) {
+            System.out.println("Config file does not exist. Creating default.");
+            saveDefaultConfig();
+            return List.of("test;optutest");
+        }
+
+        try {
+            List<String> lines = Files.readAllLines(CONFIG_PATH);
+            System.out.println("Config loaded successfully.");
+            return lines;
+        } catch (IOException e) {
+            System.err.println("Failed to load config: " + e.getMessage());
+            return List.of("test;optutest");
+        }
+    }
+
+    private static void saveDefaultConfig() {
+        try {
+            Files.createDirectories(CONFIG_PATH.getParent());
+            Files.write(CONFIG_PATH, List.of("test;optutest"), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            System.out.println("Default config saved successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to save default config: " + e.getMessage());
+        }
+    }    
+
 }

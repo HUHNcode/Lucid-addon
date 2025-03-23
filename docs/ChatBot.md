@@ -94,14 +94,23 @@ Users can fully customize the **Output Message**. For example, if you want the b
 
 ### **8. Trigger and Outputs (Item Data)**
 
--   **Description**:  
-    Defines **item triggers** and their corresponding **responses**.
+-   **Description**:
+
+    -   Defines **item triggers** and their corresponding **responses**.
 
 -   **Format**:
 
     ```
     "trigger1,trigger2;response"
     ```
+
+---
+
+### **9. Config File**
+
+-   **Description**:
+    -   The module stores its configuration in a file called `.minecraft/meteor-client/ChatBot.config`.
+    -   **Only** contains the settings for the **triggers/outputs** and is formatted exactly like in the settings with "trigger1,trigger2;response".
 
 ---
 
