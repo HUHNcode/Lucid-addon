@@ -10,7 +10,7 @@ jobs:
     update-readme:
         runs-on: ubuntu-latest
         permissions:
-            contents: write  # GitHub Actions darf ins Repo schreiben
+            contents: write  # Berechtigungen für GitHub Actions setzen
         steps:
             - name: Clone repo
               uses: actions/checkout@v3
