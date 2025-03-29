@@ -1,2 +1,2 @@
 ## Screenshots
-![](docs/images*)
+<img src="docs/images/*" width="450px"/>
