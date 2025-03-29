@@ -9,6 +9,8 @@ on:
 jobs:
     update-readme:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             - name: clone repo
               uses: actions/checkout@v3
