@@ -15,9 +15,9 @@ jobs:
             - name: Clone repo
               uses: actions/checkout@v3
 
-            - name: Adding screenshots to README
+            - name: Append screenshots to README
               run: |
-                  echo "## Screenshots" > README.md
+                  echo "## Screenshots" >> README.md
                   for img in docs/images/*; do
                     echo "<img src=\"$img\" width=\"450px\"/>" >> README.md
                   done
