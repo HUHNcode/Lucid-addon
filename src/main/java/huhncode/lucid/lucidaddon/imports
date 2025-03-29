@@ -1,0 +1,346 @@
+#########
+/home/timon/Downloads/meteor-client-master/src/main/java/meteordevelopment/meteorclient
+#########
+addons:
+AddonManager.java  GithubRepo.java  MeteorAddon.java
+
+commands:
+arguments  Command.java  commands  Commands.java
+
+commands/arguments:
+ComponentMapArgumentType.java    MacroArgumentType.java            ProfileArgumentType.java
+CompoundNbtTagArgumentType.java  ModuleArgumentType.java           RegistryEntryReferenceArgumentType.java
+DirectionArgumentType.java       NotebotSongArgumentType.java      SettingArgumentType.java
+FakePlayerArgumentType.java      PlayerArgumentType.java           SettingValueArgumentType.java
+FriendArgumentType.java          PlayerListEntryArgumentType.java  WaypointArgumentType.java
+
+commands/commands:
+BindCommand.java        EnderChestCommand.java  InventoryCommand.java    ProfilesCommand.java  SpectateCommand.java
+BindsCommand.java       FakePlayerCommand.java  LocateCommand.java       ReloadCommand.java    SwarmCommand.java
+CommandsCommand.java    FovCommand.java         MacroCommand.java        ResetCommand.java     ToggleCommand.java
+DamageCommand.java      FriendsCommand.java     ModulesCommand.java      RotationCommand.java  VClipCommand.java
+DisconnectCommand.java  GamemodeCommand.java    NameHistoryCommand.java  SaveMapCommand.java   WaspCommand.java
+DismountCommand.java    GiveCommand.java        NbtCommand.java          SayCommand.java       WaypointCommand.java
+DropCommand.java        HClipCommand.java       NotebotCommand.java      ServerCommand.java
+EnchantCommand.java     InputCommand.java       PeekCommand.java         SettingCommand.java
+
+events:
+Cancellable.java  entity  game  meteor  packets  render  world
+
+events/entity:
+BoatMoveEvent.java   EntityAddedEvent.java    EntityRemovedEvent.java     player
+DropItemsEvent.java  EntityDestroyEvent.java  LivingEntityMoveEvent.java
+
+events/entity/player:
+AttackEntityEvent.java           InteractBlockEvent.java           PlaceBlockEvent.java
+BlockBreakingCooldownEvent.java  InteractEntityEvent.java          PlayerMoveEvent.java
+BreakBlockEvent.java             InteractItemEvent.java            PlayerTickMovementEvent.java
+CanWalkOnFluidEvent.java         ItemUseCrosshairTargetEvent.java  SendMovementPacketsEvent.java
+ClipAtLedgeEvent.java            JumpVelocityMultiplierEvent.java  StartBreakingBlockEvent.java
+FinishUsingItemEvent.java        PickItemsEvent.java               StoppedUsingItemEvent.java
+
+events/game:
+ChangePerspectiveEvent.java  ItemStackTooltipEvent.java  ResolutionChangedEvent.java
+GameJoinedEvent.java         OpenScreenEvent.java        ResourcePacksReloadedEvent.java
+GameLeftEvent.java           ReceiveMessageEvent.java    SendMessageEvent.java
+
+events/meteor:
+ActiveModulesChangedEvent.java  CustomFontChangedEvent.java  ModuleBindChangedEvent.java  MouseScrollEvent.java
+CharTypedEvent.java             KeyEvent.java                MouseButtonEvent.java
+
+events/packets:
+ContainerSlotUpdateEvent.java  InventoryEvent.java  PacketEvent.java  PlaySoundPacketEvent.java
+
+events/render:
+ApplyTransformationEvent.java  HeldItemRendererEvent.java  RenderAfterWorldEvent.java   RenderItemEntityEvent.java
+ArmRenderEvent.java            Render2DEvent.java          RenderBlockEntityEvent.java  TooltipDataEvent.java
+GetFovEvent.java               Render3DEvent.java          RenderBossBarEvent.java
+
+events/world:
+AmbientOcclusionEvent.java  ChunkDataEvent.java       ParticleEvent.java            ServerConnectEndEvent.java
+BlockActivateEvent.java     ChunkOcclusionEvent.java  PlaySoundEvent.java           TickEvent.java
+BlockUpdateEvent.java       CollisionShapeEvent.java  ServerConnectBeginEvent.java
+
+gui:
+DefaultSettingsWidgetFactory.java  GuiTheme.java   renderer  tabs    utils    WidgetScreen.java
+GuiKeyEvents.java                  GuiThemes.java  screens   themes  widgets  WindowScreen.java
+
+gui/renderer:
+GuiDebugRenderer.java  GuiRenderer.java  GuiRenderOperation.java  operations  packer  Scissor.java
+
+gui/renderer/operations:
+TextOperation.java
+
+gui/renderer/packer:
+GuiTexture.java  TexturePacker.java  TextureRegion.java
+
+gui/screens:
+accounts                           EditSystemScreen.java  ModulesScreen.java        ProxiesScreen.java
+CommitsScreen.java                 MarkerScreen.java      NotebotSongsScreen.java   settings
+EditBookTitleAndAuthorScreen.java  ModuleScreen.java      ProxiesImportScreen.java
+
+gui/screens/accounts:
+AccountInfoScreen.java  AddAccountScreen.java          AddCrackedAccountScreen.java
+AccountsScreen.java     AddAlteningAccountScreen.java  AddMicrosoftAccountScreen.java
+
+gui/screens/settings:
+BlockDataSettingScreen.java            FontFaceSettingScreen.java          RegistryListSettingScreen.java
+BlockListSettingScreen.java            ItemListSettingScreen.java          ScreenHandlerSettingScreen.java
+BlockSettingScreen.java                ItemSettingScreen.java              SoundEventListSettingScreen.java
+ColorSettingScreen.java                ModuleListSettingScreen.java        StatusEffectAmplifierMapSettingScreen.java
+DynamicRegistryListSettingScreen.java  PacketBoolSettingScreen.java        StatusEffectListSettingScreen.java
+EnchantmentListSettingScreen.java      ParticleTypeListSettingScreen.java  StorageBlockListSettingScreen.java
+EntityTypeListSettingScreen.java       PotionSettingScreen.java
+
+gui/tabs:
+builtin  Tab.java  TabScreen.java  Tabs.java  WindowTabScreen.java
+
+gui/tabs/builtin:
+ConfigTab.java   GuiTab.java  MacrosTab.java   PathManagerTab.java
+FriendsTab.java  HudTab.java  ModulesTab.java  ProfilesTab.java
+
+gui/themes:
+meteor
+
+gui/themes/meteor:
+MeteorGuiTheme.java  MeteorWidget.java  widgets
+
+gui/themes/meteor/widgets:
+input                            WMeteorLabel.java       WMeteorSection.java            WMeteorView.java
+pressable                        WMeteorModule.java      WMeteorTooltip.java            WMeteorWindow.java
+WMeteorAccount.java              WMeteorMultiLabel.java  WMeteorTopBar.java
+WMeteorHorizontalSeparator.java  WMeteorQuad.java        WMeteorVerticalSeparator.java
+
+gui/themes/meteor/widgets/input:
+WMeteorDropdown.java  WMeteorSlider.java  WMeteorTextBox.java
+
+gui/themes/meteor/widgets/pressable:
+WMeteorButton.java  WMeteorCheckbox.java  WMeteorFavorite.java  WMeteorMinus.java  WMeteorPlus.java  WMeteorTriangle.java
+
+gui/utils:
+AlignmentX.java  BaseWidget.java  CharFilter.java      SettingsWidgetFactory.java      WindowConfig.java
+AlignmentY.java  Cell.java        IScreenFactory.java  StarscriptTextBoxRenderer.java
+
+gui/widgets:
+containers  WAccount.java              WItemWithLabel.java  WMultiLabel.java  WTexture.java  WVerticalSeparator.java
+input       WHorizontalSeparator.java  WKeybind.java        WQuad.java        WTooltip.java  WWidget.java
+pressable   WItem.java                 WLabel.java          WRoot.java        WTopBar.java
+
+gui/widgets/containers:
+WContainer.java  WHorizontalList.java  WSection.java  WTable.java  WVerticalList.java  WView.java  WWindow.java
+
+gui/widgets/input:
+WBlockPosEdit.java  WDoubleEdit.java  WDropdown.java  WIntEdit.java  WSlider.java  WTextBox.java
+
+gui/widgets/pressable:
+WButton.java  WCheckbox.java  WFavorite.java  WMinus.java  WPlus.java  WPressable.java  WTriangle.java
+
+mixininterface:
+IAbstractFurnaceScreenHandler.java    IEntityRenderState.java              IPlayerMoveC2SPacket.java
+IBakedQuad.java                       IExplosionS2CPacket.java             IRaycastContext.java
+IBox.java                             IHorseBaseEntity.java                ISimpleOption.java
+ICamera.java                          IMessageHandler.java                 ISlot.java
+ICapabilityTracker.java               IMinecraftClient.java                IText.java
+IChatHud.java                         IMiningToolItem.java                 IVec3d.java
+IChatHudLine.java                     IMultiPhase.java                     IWorldRenderer.java
+IChatHudLineVisible.java              IMultiPhaseParameters.java
+IClientPlayerInteractionManager.java  IPlayerInteractEntityC2SPacket.java
+
+renderer:
+DrawMode.java  Framebuffer.java  Mesh.java                 Renderer2D.java  Shader.java      Shaders.java    text
+Fonts.java     GL.java           PostProcessRenderer.java  Renderer3D.java  ShaderMesh.java  ShapeMode.java  Texture.java
+
+renderer/text:
+BuiltinFontFace.java     FontFace.java    FontInfo.java  SystemFontFace.java  VanillaTextRenderer.java
+CustomTextRenderer.java  FontFamily.java  Font.java      TextRenderer.java
+
+settings:
+BlockDataSetting.java        EntityTypeListSetting.java  KeybindSetting.java            Settings.java
+BlockListSetting.java        EnumSetting.java            ModuleListSetting.java         SoundEventListSetting.java
+BlockPosSetting.java         FontFaceSetting.java        PacketListSetting.java         StatusEffectAmplifierMapSetting.java
+BlockSetting.java            GenericSetting.java         ParticleTypeListSetting.java   StatusEffectListSetting.java
+BoolSetting.java             IBlockData.java             PotionSetting.java             StorageBlockListSetting.java
+ColorListSetting.java        IntSetting.java             ProvidedStringSetting.java     StringListSetting.java
+ColorSetting.java            ItemListSetting.java        ScreenHandlerListSetting.java  StringSetting.java
+DoubleSetting.java           ItemSetting.java            SettingGroup.java              Vector3dSetting.java
+EnchantmentListSetting.java  IVisible.java               Setting.java
+
+systems:
+accounts  config  friends  hud  macros  modules  profiles  proxies  System.java  Systems.java  waypoints
+
+systems/accounts:
+AccountCache.java  Accounts.java     MicrosoftLogin.java  TokenAccount.java  UuidToProfileResponse.java
+Account.java       AccountType.java  TexturesJson.java    types
+
+systems/accounts/types:
+CrackedAccount.java  MicrosoftAccount.java  TheAlteningAccount.java
+
+systems/config:
+Config.java
+
+systems/friends:
+Friend.java  Friends.java
+
+systems/hud:
+Alignment.java  HudBox.java          HudElement.java  Hud.java          screens       YAnchor.java
+elements        HudElementInfo.java  HudGroup.java    HudRenderer.java  XAnchor.java
+
+systems/hud/elements:
+ActiveModulesHud.java  CompassHud.java    ItemHud.java         ModuleInfosHud.java  PotionTimersHud.java
+ArmorHud.java          HoleHud.java       LagNotifierHud.java  PlayerModelHud.java  TextHud.java
+CombatHud.java         InventoryHud.java  MeteorTextHud.java   PlayerRadarHud.java
+
+systems/hud/screens:
+AddHudElementScreen.java  HudEditorScreen.java  HudElementPresetsScreen.java  HudElementScreen.java
+
+systems/macros:
+Macro.java  Macros.java
+
+systems/modules:
+Categories.java  Category.java  combat  misc  Module.java  Modules.java  movement  player  render  world
+
+systems/modules/combat:
+AnchorAura.java  ArrowDodge.java  AutoEXP.java     AutoWeb.java    Burrow.java       HoleFiller.java  SelfAnvil.java
+AntiAnchor.java  AutoAnvil.java   AutoTotem.java   BedAura.java    Criticals.java    KillAura.java    SelfTrap.java
+AntiAnvil.java   AutoArmor.java   AutoTrap.java    BowAimbot.java  CrystalAura.java  Offhand.java     SelfWeb.java
+AntiBed.java     AutoCity.java    AutoWeapon.java  BowSpam.java    Hitboxes.java     Quiver.java      Surround.java
+
+systems/modules/misc:
+AntiPacketKick.java  AutoRespawn.java    BookBot.java          MessageAura.java  Notifier.java         SoundBlocker.java
+AutoLog.java         BetterBeacons.java  DiscordPresence.java  NameProtect.java  PacketCanceller.java  Spam.java
+AutoReconnect.java   BetterChat.java     InventoryTweaks.java  Notebot.java      ServerSpoof.java      swarm
+
+systems/modules/misc/swarm:
+SwarmConnection.java  SwarmHost.java  Swarm.java  SwarmWorker.java
+
+systems/modules/movement:
+AirJump.java   AutoWalk.java  ElytraBoost.java    Flight.java    NoFall.java       Scaffold.java  Sprint.java
+Anchor.java    AutoWasp.java  elytrafly           GUIMove.java   NoSlow.java       Slippy.java    Step.java
+AntiAFK.java   Blink.java     EntityControl.java  HighJump.java  Parkour.java      Sneak.java     TridentBoost.java
+AntiVoid.java  BoatFly.java   EntitySpeed.java    Jesus.java     ReverseStep.java  speed          Velocity.java
+AutoJump.java  ClickTP.java   FastClimb.java      LongJump.java  SafeWalk.java     Spider.java
+
+systems/modules/movement/elytrafly:
+ElytraFlightMode.java  ElytraFlightModes.java  ElytraFly.java  modes
+
+systems/modules/movement/elytrafly/modes:
+Bounce.java  Packet.java  Pitch40.java  Vanilla.java
+
+systems/modules/movement/speed:
+modes  Speed.java  SpeedMode.java  SpeedModes.java
+
+systems/modules/movement/speed/modes:
+Strafe.java  Vanilla.java
+
+systems/modules/player:
+AntiHunger.java   AutoMend.java       EXPThrower.java      LiquidInteract.java    NoRotate.java      Reach.java
+AutoClicker.java  AutoReplenish.java  FakePlayer.java      MiddleClickExtra.java  OffhandCrash.java  Rotation.java
+AutoEat.java      AutoTool.java       FastUse.java         Multitask.java         Portals.java       SpeedMine.java
+AutoFish.java     BreakDelay.java     GhostHand.java       NoInteract.java        PotionSaver.java
+AutoGap.java      ChestSwap.java      InstantRebreak.java  NoMiningTrace.java     PotionSpoof.java
+
+systems/modules/render:
+BetterTab.java       BreakIndicators.java  FreeLook.java       LogoutSpots.java  Tracers.java          Xray.java
+BetterTooltips.java  CameraTweaks.java     Fullbright.java     marker            Trail.java            Zoom.java
+blockesp             Chams.java            HandView.java       Nametags.java     Trajectories.java
+BlockSelection.java  CityESP.java          HoleESP.java        NoRender.java     TunnelESP.java
+Blur.java            EntityOwner.java      ItemHighlight.java  PopChams.java     VoidESP.java
+BossStack.java       ESP.java              ItemPhysics.java    StorageESP.java   WallHack.java
+Breadcrumbs.java     Freecam.java          LightOverlay.java   TimeChanger.java  WaypointsModule.java
+
+systems/modules/render/blockesp:
+BlockESP.java  ESPBlockData.java  ESPBlockDataScreen.java  ESPBlock.java  ESPChunk.java  ESPGroup.java
+
+systems/modules/render/marker:
+BaseMarker.java  CuboidMarker.java  MarkerFactory.java  Marker.java  Sphere2dMarker.java
+
+systems/modules/world:
+AirPlace.java    AutoNametag.java  Collisions.java    HighwayBuilder.java  Nuker.java         VeinMiner.java
+Ambience.java    AutoShearer.java  EChestFarmer.java  InfinityMiner.java   PacketMine.java
+AutoBreed.java   AutoSign.java     EndermanLook.java  LiquidFiller.java    SpawnProofer.java
+AutoBrewer.java  AutoSmelter.java  Excavator.java     MountBypass.java     StashFinder.java
+AutoMount.java   BuildHeight.java  Flamethrower.java  NoGhostBlocks.java   Timer.java
+
+systems/profiles:
+Profile.java  Profiles.java
+
+systems/proxies:
+Proxies.java  Proxy.java  ProxyType.java
+
+systems/waypoints:
+Waypoint.java  Waypoints.java
+
+utils:
+entity  misc     notebot  player         PreInit.java      render   Utils.java
+files   network  other    PostInit.java  ReflectInit.java  tooltip  world
+
+utils/entity:
+DamageUtils.java  fakeplayer                      SortPriority.java  TargetUtils.java
+EntityUtils.java  ProjectileEntitySimulator.java  Target.java
+
+utils/entity/fakeplayer:
+FakePlayerEntity.java  FakePlayerManager.java
+
+utils/files:
+StreamUtils.java
+
+utils/misc:
+ByteCountDataOutput.java  HorizontalDirection.java  Keybind.java           NbtException.java        ValueComparableMap.java
+ComponentMapReader.java   IChangeable.java          MBlockPos.java         NbtUtils.java            Version.java
+CPSUtils.java             ICopyable.java            MeteorStarscript.java  Pool.java
+CursorStyle.java          IGetter.java              MissHitResult.java     Producer.java
+EmptyIterator.java        input                     MyPotion.java          text
+FakeClientPlayer.java     ISerializable.java        Names.java             UnorderedArrayList.java
+
+utils/misc/input:
+Input.java  KeyAction.java  KeyBinds.java
+
+utils/misc/text:
+ColoredText.java  MeteorClickEvent.java  RunnableClickEvent.java  TextUtils.java  TextVisitor.java
+
+utils/network:
+Capes.java               Http.java             MeteorExecutor.java  PacketUtils.java
+FailedHttpResponse.java  JsonBodyHandler.java  OnlinePlayers.java   PacketUtilsUtil.java
+
+utils/notebot:
+decoder  instrumentdetect  NotebotUtils.java  song
+
+utils/notebot/decoder:
+NBSSongDecoder.java  SongDecoder.java  SongDecoders.java  TextSongDecoder.java
+
+utils/notebot/instrumentdetect:
+InstrumentDetectFunction.java  InstrumentDetectMode.java
+
+utils/notebot/song:
+Note.java  Song.java
+
+utils/other:
+JsonDateDeserializer.java  Snapper.java
+
+utils/player:
+ChatUtils.java          EChestMemory.java    InventorySorter.java  PathFinder.java   Rotations.java  SlotUtils.java
+CustomPlayerInput.java  FindItemResult.java  InvUtils.java         PlayerUtils.java  Safety.java     TitleScreenCredits.java
+
+utils/render:
+AlignmentX.java   color                            MeteorToast.java        PlayerHeadUtils.java  SimpleBlockRenderer.java
+AlignmentY.java   FontUtils.java                   NametagUtils.java       postprocess           WireframeEntityRenderer.java
+Box.java          IVertexConsumerProvider.java     PeekScreen.java         prompts
+ByteTexture.java  MeshVertexConsumerProvider.java  PlayerHeadTexture.java  RenderUtils.java
+
+utils/render/color:
+Color.java  RainbowColor.java  RainbowColors.java  SettingColor.java
+
+utils/render/postprocess:
+ChamsShader.java          EntityShader.java       PostProcessShaders.java
+EntityOutlineShader.java  PostProcessShader.java  StorageOutlineShader.java
+
+utils/render/prompts:
+OkPrompt.java  Prompt.java  YesNoPrompt.java
+
+utils/tooltip:
+BannerTooltipComponent.java  ContainerTooltipComponent.java  MapTooltipComponent.java  TextTooltipComponent.java
+BookTooltipComponent.java    EntityTooltipComponent.java     MeteorTooltipData.java
+
+utils/world:
+BlockEntityIterator.java  BlockUtils.java         ChunkIterator.java  Dir.java
+BlockIterator.java        CardinalDirection.java  Dimension.java      TickRate.java

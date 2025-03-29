@@ -10,6 +10,9 @@ import huhncode.lucid.lucidaddon.modules.ChatFonts;
 import huhncode.lucid.lucidaddon.modules.AfkLog;
 import huhncode.lucid.lucidaddon.modules.AutoGG;
 import huhncode.lucid.lucidaddon.modules.AutoTotem;
+import huhncode.lucid.lucidaddon.modules.HelloBoxModule;
+
+//import huhncode.lucid.lucidaddon.commands.PlayerInfoCommand;
 
 import com.mojang.logging.LogUtils;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -39,12 +42,18 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new AfkLog());
         Modules.get().add(new AutoGG());
         Modules.get().add(new AutoTotem());
+        Modules.get().add(new HelloBoxModule());
+
+
 
         // Commands
         Commands.add(new CommandExample());
+        //Commands.add(new PlayerInfoCommand());
+
 
         // HUD
         Hud.get().register(HudExample.INFO);
+        
     }
 
     @Override

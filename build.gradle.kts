@@ -62,3 +62,12 @@ tasks {
         options.release = 21
     }
 }
+
+
+sourceSets {
+    main {
+        java {
+            exclude("**/.experimental/**")
+        }
+    }
+}
