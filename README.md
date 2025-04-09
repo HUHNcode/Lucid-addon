@@ -10,8 +10,6 @@
 
 ## Modules
 
-Currently, Lucid includes one module (suggestions for new features are always welcome!):
-
 -   **[Chat Bot](docs/ChatBot.md)**
 
     -   Automatically detects and responds to chat messages based on configurable settings.

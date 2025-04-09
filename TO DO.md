@@ -11,3 +11,8 @@
 -   [ ] maby caht emojis
 -   [ ] maby starsktip suport
 -   [ ] /info comand module (armor info)
+-   [ ] esp modul that showes the landing spot of perls of other players (prediction)
+-   [ ] no item destroy modul (cpvp)
+-   [ ] holde key modul
+-   [ ] walk slow mudule
+-   [ ] 

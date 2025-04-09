@@ -10,7 +10,9 @@ import huhncode.lucid.lucidaddon.modules.ChatFonts;
 import huhncode.lucid.lucidaddon.modules.AfkLog;
 import huhncode.lucid.lucidaddon.modules.AutoGG;
 import huhncode.lucid.lucidaddon.modules.AutoTotem;
-import huhncode.lucid.lucidaddon.modules.HelloBoxModule;
+import huhncode.lucid.lucidaddon.modules.FakeInventory;
+
+
 
 //import huhncode.lucid.lucidaddon.commands.PlayerInfoCommand;
 
@@ -24,10 +26,15 @@ import meteordevelopment.meteorclient.systems.modules.Category;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import org.slf4j.Logger;
 
+import meteordevelopment.meteorclient.addons.MeteorAddon;
+import meteordevelopment.meteorclient.gui.themes.meteor.MeteorGuiTheme;
+import meteordevelopment.meteorclient.gui.GuiTheme;
+
 public class LucidAddon extends MeteorAddon {
     public static final Logger LOG = LogUtils.getLogger();
     public static final Category CATEGORY = new Category("Lucid");
     public static final HudGroup HUD_GROUP = new HudGroup("Example");
+    public static final GuiTheme THEME = new MeteorGuiTheme();
 
     @Override
     public void onInitialize() {
@@ -42,7 +49,7 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new AfkLog());
         Modules.get().add(new AutoGG());
         Modules.get().add(new AutoTotem());
-        Modules.get().add(new HelloBoxModule());
+        Modules.get().add(new FakeInventory());
 
 
 
