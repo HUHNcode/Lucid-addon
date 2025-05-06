@@ -1,18 +1,20 @@
 # TO DO
 
--   [ ] chat fonts: fonts in msg möglich machen
--   [x] module: afk kick
--   [ ] module: better macros (cursor place)
--   [x] autototem + (random delay to prevent anti cheat)
--   [x] Chat Bot: add config file for trigger+outputs
--   [ ] maby cords loger module
--   [ ] anit chat spam module (auto anti spam)
--   [ ] slot swaper
--   [ ] maby caht emojis
--   [ ] maby starsktip suport
--   [ ] /info comand module (armor info)
--   [ ] esp modul that showes the landing spot of perls of other players (prediction)
--   [ ] no item destroy modul (cpvp)
--   [ ] holde key modul
--   [ ] walk slow mudule
--   [ ] 
+-   [x] Chat Fonts: Enable fonts in messages
+-   [x] Module: AFK Kick
+-   [ ] Module: Better Macros (Cursor Position)
+-   [x] Auto Totem + (Random Delay to Prevent Anti-Cheat)
+-   [x] Chat Bot: Add Config File for Triggers + Outputs
+-   [ ] Maybe Coordinates Logger Module
+-   [ ] Anti Chat Spam Module (Auto Anti-Spam)
+-   [ ] Slot Swapper
+-   [ ] Maybe Chat Emojis
+-   [ ] Maybe Starstrike Support
+-   [ ] /info Command Module (Armor Info)
+-   [ ] ESP Module That Shows Landing Spot of Other Players' Pearls (Prediction)
+-   [ ] No Item Destroy Module (CPvP)
+-   [ ] Hold Key Module
+-   [ ] Walk Slow Module
+-   [ ] enderport locator (per enderpearls)
+-   [ ] doubble commands (use "&&" do do mulitible comands: "/kit && /rtp")
+-   [ ] McTires befor name module (https://mctiers.com/api/search_profile/{player})

@@ -36,8 +36,13 @@
     -   Option to send the message privately as **/msg**.
 
 -   **Auto Totem**
+
     -   Automatically equips a **Totem of Undying** when one is consumed.
     -   **Random delay** to bypass anti-cheat systems.
+
+-   **No CPVP Item Destroy**
+    -   Blocks crystal and anchor use for a short time after a player dies nearby, to prevent item destruction.
+    -   **delay** changes the interaction block delay (in seconds).
 
 ---
 
