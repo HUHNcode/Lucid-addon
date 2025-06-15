@@ -1,3 +1,5 @@
+rootProject.name = "Lucid-addon"
+
 pluginManagement {
     repositories {
         maven {

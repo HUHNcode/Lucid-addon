@@ -1,4 +1,9 @@
 {
+  "required": true,
   "package": "huhncode.lucid.lucidaddon.mixin",
-  "mixins": ["ClientPlayerInteractionManagerMixin"]
+  "compatibilityLevel": "JAVA_21",
+  "client": ["ExampleMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

@@ -30,3 +30,4 @@ public abstract class ExampleMixin {
         LucidAddon.LOG.info("Hello from ExampleMixin!");
     }
 }
+    
