@@ -39,7 +39,7 @@ public class InstantCrystalBreaker extends Module {
     private void onPacketSend(PacketEvent.Send event) {
         if (event.packet instanceof PlayerInteractEntityC2SPacket packet) {
             // Wenn der angegriffene Gegenstand ein Ender Crystal ist
-            if (isEndCrystal(packet.getEntityId())) {
+            if (isEndCrystal(packet.())) {
                 event.cancel(); // Paket blockieren
 
                 // Füge den Angriff zur Warteschlange hinzu

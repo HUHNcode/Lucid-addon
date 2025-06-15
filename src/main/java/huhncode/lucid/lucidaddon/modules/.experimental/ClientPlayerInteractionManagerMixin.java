@@ -1,6 +1,6 @@
 package huhncode.lucid.lucidaddon.mixin;
 
-import huhncode.lucid.lucidaddon.modules.CrystalProtect;
+import huhncode.lucid.lucidaddon.modules.AntiItemDestroy;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
@@ -15,8 +15,8 @@ public abstract class ClientPlayerInteractionManagerMixin {
     @Inject(method = "attackEntity", at = @At("HEAD"), cancellable = true)
     private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
         if (target instanceof EndCrystalEntity) {
-            CrystalProtect crystalProtect = Modules.get().get(CrystalProtect.class);
-            if (crystalProtect != null && crystalProtect.shouldBlockCrystalBreaking()) {
+            AntiItemDestroy AntiItemDestroy = Modules.get().get(AntiItemDestroy.class);
+            if (AntiItemDestroy != null && AntiItemDestroy.shouldBlockCrystalBreaking()) {
                 ci.cancel();
             }
         }

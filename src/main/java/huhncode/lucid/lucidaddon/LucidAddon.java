@@ -12,7 +12,7 @@ import huhncode.lucid.lucidaddon.modules.AutoGG;
 import huhncode.lucid.lucidaddon.modules.AutoTotem;
 import huhncode.lucid.lucidaddon.modules.ChatBot;
 import huhncode.lucid.lucidaddon.modules.ChatFonts;
-import huhncode.lucid.lucidaddon.modules.CrystalProtect;
+import huhncode.lucid.lucidaddon.modules.AntiItemDestroy;
 import huhncode.lucid.lucidaddon.modules.MultiCommand;
 import huhncode.lucid.lucidaddon.modules.StrongholdFinder;
 
@@ -46,7 +46,7 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new AfkLog());
         Modules.get().add(new AutoGG());
         Modules.get().add(new AutoTotem());
-        Modules.get().add(new CrystalProtect());
+        Modules.get().add(new AntiItemDestroy());
         Modules.get().add(new MultiCommand());
         Modules.get().add(new StrongholdFinder());
         

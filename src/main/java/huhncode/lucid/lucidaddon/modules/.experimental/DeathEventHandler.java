@@ -5,10 +5,10 @@ import meteordevelopment.orbit.EventHandler;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class DeathEventHandler {
-    private final CrystalProtect crystalProtect;
+    private final AntiItemDestroy AntiItemDestroy;
 
-    public DeathEventHandler(CrystalProtect crystalProtect) {
-        this.crystalProtect = crystalProtect;
+    public DeathEventHandler(AntiItemDestroy AntiItemDestroy) {
+        this.AntiItemDestroy = AntiItemDestroy;
     }
 
     @EventHandler
@@ -17,7 +17,7 @@ public class DeathEventHandler {
         
         // Check if we killed this player
         if (event.player.getAttacker() == mc.player) {
-            crystalProtect.onPlayerKill(event.player);
+            AntiItemDestroy.onPlayerKill(event.player);
         }
     }
 }
