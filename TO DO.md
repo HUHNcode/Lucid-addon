@@ -11,6 +11,7 @@
 -   [x] enderport locator (per enderpearls)
 -   [x] doubble commands (use "&&" do do mulitible comands: "/kit && /rtp")
     -   [ ] add meteor commands
+-   [x] No Item Destroy Module (CPvP)
 
 ## Todo
 
