@@ -40,9 +40,33 @@
     -   Automatically equips a **Totem of Undying** when one is consumed.
     -   **Random delay** to bypass anti-cheat systems.
 
--   **No CPVP Item Destroy**
+-   **Anti Item Destroy**
+
     -   Blocks crystal and anchor use for a short time after a player dies nearby, to prevent item destruction.
     -   **delay** changes the interaction block delay (in seconds).
+
+-   **Better Macros**
+
+    -   Opens the chat input screen with predefined text and cursor position via keybind.
+    -   Configure macros directly in the module settings.
+    -   Format: `key_name::message_with_$c_for_cursor` (e.g., `k::/say hello $c world`).
+    -   `$c` marks the desired cursor position.
+
+-   **Multi Command**
+
+    -   Allows executing multiple commands sequentially.
+    -   Use a delimiter (default: `&&`) to separate commands (e.g., `/home && /kit daily`).
+
+-   **Stronghold Finder**
+
+    -   Assists in locating strongholds by triangulating positions.
+    -   Calculates stronghold location based on two eye of ender throws (position and angle).
+    -   Displays the estimated coordinates in chat.
+
+-   **Packet Logger**
+    -   Logs network packets for debugging or analysis.
+    -   Option to log incoming (S2C), outgoing (C2S), or both types of packets.
+    -   Can filter packets by name.
 
 ---
 

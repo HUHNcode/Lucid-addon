@@ -12,11 +12,11 @@
 -   [x] doubble commands (use "&&" do do mulitible comands: "/kit && /rtp")
     -   [ ] add meteor commands
 -   [x] No Item Destroy Module (CPvP)
+    -   [ ] limet crytal speed on ping
+-   [x] Module: Better Macros (Cursor Position)
 
 ## Todo
 
--   [ ] No Item Destroy Module (CPvP)
--   [ ] Module: Better Macros (Cursor Position)
 -   [ ] Maybe Coordinates Logger Module
 -   [ ] Anti Chat Spam Module (Auto Anti-Spam)
 -   [ ] Slot Swapper
