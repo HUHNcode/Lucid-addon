@@ -1,60 +1,57 @@
 package huhncode.lucid.lucidaddon.commands;
 
-import net.minecraft.command.CommandSource;
-
-import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.commands.Command;
-import meteordevelopment.meteorclient.settings.BoolSetting;
-import meteordevelopment.meteorclient.settings.IntSetting;
-import meteordevelopment.meteorclient.settings.Setting;
-import meteordevelopment.meteorclient.settings.SettingGroup;
-import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
-import net.minecraft.screen.GenericContainerScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import meteordevelopment.meteorclient.commands.Command;
+import huhncode.lucid.lucidaddon.ui.PlayerInfoDisplay;
+// Importe waren teilweise doppelt oder nicht mehr benötigt
+import com.mojang.brigadier.arguments.StringArgumentType;
+// import meteordevelopment.meteorclient.commands.Command;
+import meteordevelopment.meteorclient.utils.player.ChatUtils;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.command.CommandSource;
+// import net.minecraft.command.argument.EntityArgumentType; // Nicht für Client-seitige Spielersuche benötigt
+import net.minecraft.entity.player.PlayerEntity;
 
+import static com.mojang.brigadier.Command.SINGLE_SUCCESS;
 
 public class PlayerInfoCommand extends Command {
     public PlayerInfoCommand() {
-        super("fakeinventory", "Öffnet das Fake-Inventar (Chest GUI) über den Command.");
+        super("info", "Displays information about a player in a GUI.");
     }
-    
+
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        builder.executes(context -> {
-            openFakeInventory();
-            return SINGLE_SUCCESS;
-        });
-    }
+        // Verwende StringArgumentType für den Spielernamen
+        builder.then(argument("player", StringArgumentType.string())
+            .executes(context -> {
+                ChatUtils.info("PlayerInfoCommand: Befehl ausgeführt."); // DEBUG
+                String playerName = StringArgumentType.getString(context, "player");
+                PlayerEntity player = null;
 
-    private void openFakeInventory() {
-        int rowsValue = 3;
-        int slots = rowsValue * 9;
-        
-        GenericContainerScreenHandler handler = new GenericContainerScreenHandler(
-            ScreenHandlerType.GENERIC_9X6, // GENERIC_9X6 deckt bis zu 6 Zeilen ab
-            0,                           // Dummy-Sync-ID (clientseitig, daher irrelevant)
-            mc.player.getInventory(),
-            new FakeInventoryInventory(slots),
-            rowsValue
-        );
-        
-        mc.setScreen(new GenericContainerScreen(handler, mc.player.getInventory(), Text.literal("Fake Inventory")));
-    }
+                if (MinecraftClient.getInstance().world != null) {
+                    ChatUtils.info("PlayerInfoCommand: Suche Spieler '%s' in der Welt.", playerName); // DEBUG
+                    for (PlayerEntity p : MinecraftClient.getInstance().world.getPlayers()) {
+                        if (p.getName().getString().equalsIgnoreCase(playerName)) {
+                            player = p;
+                            break;
+                        }
+                    }
+                }
+                ChatUtils.info("PlayerInfoCommand: Spieler gefunden: " + (player != null ? player.getName().getString() : "null")); // DEBUG
 
-    // Innere Klasse: Dummy-Inventar, das beispielhafte Items in bestimmten Slots platziert.
-    private static class FakeInventoryInventory extends SimpleInventory {
-        public FakeInventoryInventory(int size) {
-            super(size);
-            // Befülle exemplarisch:
-            // Slot 0: Diamantschwert, Slot 9: Eisenbrustpanzer, Slot 18: Goldener Apfel
-            setStack(0, new ItemStack(Items.DIAMOND_SWORD));
-            setStack(9, new ItemStack(Items.IRON_CHESTPLATE));
-            setStack(18, new ItemStack(Items.GOLDEN_APPLE));
-        }
+                if (player == null) {
+                    
+                    ChatUtils.error("Player not found.");
+                    return 0;
+                }
+                ChatUtils.info("PlayerInfoCommand: Spieler '%s' gefunden. Versuche GUI zu öffnen.", player.getName().getString()); // DEBUG
+
+                final PlayerEntity finalPlayer = player;
+                
+                // Stelle sicher, dass dies auf dem Client-Thread für GUI-Operationen ausgeführt wird
+                MinecraftClient.getInstance().execute(() -> PlayerInfoDisplay.show(finalPlayer));
+                 return SINGLE_SUCCESS;
+            }));
     }
-}
+ }
+    
