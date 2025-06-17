@@ -17,6 +17,7 @@ import huhncode.lucid.lucidaddon.modules.MultiCommand;
 import huhncode.lucid.lucidaddon.modules.StrongholdFinder;
 import huhncode.lucid.lucidaddon.modules.PacketLogger;
 import huhncode.lucid.lucidaddon.modules.BetterMacros;
+import huhncode.lucid.lucidaddon.modules.FakeChestInfo;
 
 
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -53,6 +54,7 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new StrongholdFinder());
         Modules.get().add(new PacketLogger());
         Modules.get().add(new BetterMacros());
+        Modules.get().add(new FakeChestInfo());
 
         
 
