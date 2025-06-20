@@ -30,11 +30,11 @@
 
 ## To Fix
 
--   [ ] Afk log start afk timer after first enabeling the module
--   [x] Auto gg, better kill identifier (kill efect module)
+-   [x] Afk log start afk timer after first enabling the module
+-   [x] Auto gg, better kill identifier (kill effect module)
 -   [ ] Auto tot plus, still detectable
--   [ ] Chat fonts, dose not appy if ters an space after the $f
--   [ ] multi command: multible /msg dont work
--   [ ] multi command dely delys main thred (game frezes)
--   [ ] multi command: add chat messages (whitoud /)
--   [x] Fix kill detection on no item destroy (kill efect module)
+-   [x] Chat fonts, dose not apply if there is a space after the $f
+-   [ ] multi command: multiple /msg don't work
+-   [ ] multi command: delay delays main thread (game freezes)
+-   [ ] multi command: add chat messages (without /)
+-   [x] Fix kill detection on no item destroy (kill effect module)
