@@ -36,7 +36,8 @@ public class KillTrackerModule extends Module {
     private final Map<UUID, Long> recentHits = new ConcurrentHashMap<>();
 
     public KillTrackerModule() {
-        super(LucidAddon.CATEGORY, "Kill Tracker", "Tracks player hits and triggers PlayerKillEvent on subsequent deaths.");
+        super(LucidAddon.CATEGORY, "Kill Tracker", "Tells you when you kill a player after hitting them.\n" +
+            "This module tracks hits and considers a death as your kill if it occurs within the specified time after your hit.");
     }
 
     @Override
@@ -65,7 +66,7 @@ public class KillTrackerModule extends Module {
         if (hitPlayer.equals(mc.player)) return; // Don't track self-hits
 
         recentHits.put(hitPlayer.getUuid(), System.currentTimeMillis());
-        ChatUtils.info("Tracked hit on: " + hitPlayer.getName().getString());
+        
         
     }
 
@@ -85,7 +86,7 @@ public class KillTrackerModule extends Module {
             // Player was hit by us recently and died.
             MeteorClient.EVENT_BUS.post(new PlayerKillEvent(mc.player, killedPlayer, System.currentTimeMillis(), lastHitTime));
             recentHits.remove(killedPlayer.getUuid()); // Prevent multiple events for the same death
-            ChatUtils.info("PlayerKillEvent posted for: " + killedPlayer.getName().getString());
+            ChatUtils.info("You Killed: " + killedPlayer.getName().getString());
         }
     }
 }

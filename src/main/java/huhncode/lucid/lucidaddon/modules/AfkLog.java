@@ -4,7 +4,7 @@ package huhncode.lucid.lucidaddon.modules;
 import meteordevelopment.meteorclient.systems.modules.misc.AutoReconnect;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
-import huhncode.lucid.lucidaddon.utils.IsAFK;
+import huhncode.lucid.lucidaddon.modules.utils.IsAFK;
 import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.events.world.TickEvent;
 import meteordevelopment.meteorclient.settings.*;

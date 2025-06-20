@@ -55,7 +55,7 @@ public class KillDetectionService {
         if (mc.player == null || event.entity == null || !(event.entity instanceof PlayerEntity)) {
             return;
         }
-        ChatUtils.info("[KDS] Player attacked: " + event.entity.getName().getString()); // Optional: for debugging
+        
 
         PlayerEntity hitPlayer = (PlayerEntity) event.entity;
         if (hitPlayer.equals(mc.player)) return; // Don't track self-hits
@@ -69,7 +69,7 @@ public class KillDetectionService {
         if (mc.world == null || mc.player == null || !(event.packet instanceof EntityStatusS2CPacket packet) || packet.getStatus() != 3) {
             return; // Not a death packet or player/world is null
         }
-        ChatUtils.info("[KDS] Player died: " + packet.getEntity(mc.world).getName().getString() + ""); // Optional: for debugging
+        
         Entity entity = packet.getEntity(mc.world);
         if (!(entity instanceof PlayerEntity killedPlayer) || killedPlayer.equals(mc.player)) {
             return; // Not a player death or self-death
@@ -80,7 +80,7 @@ public class KillDetectionService {
             // Player was hit by us recently and died.
             MeteorClient.EVENT_BUS.post(new PlayerKillEvent(mc.player, killedPlayer, System.currentTimeMillis(), lastHitTime));
             recentHits.remove(killedPlayer.getUuid()); // Prevent multiple events for the same death
-            ChatUtils.info("[KDS] PlayerKillEvent posted for: " + killedPlayer.getName().getString()); // Optional: for debugging
+            
         }
     }
 }

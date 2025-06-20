@@ -1,4 +1,4 @@
-package huhncode.lucid.lucidaddon.utils;
+package huhncode.lucid.lucidaddon.modules.utils;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Vec3d;
