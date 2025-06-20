@@ -39,6 +39,12 @@ public class AfkLog extends Module {
         super(LucidAddon.CATEGORY, "Afk-Log", "Automatically logs out when AFK for too long.");
     }
 
+    @Override
+    public void onActivate() {
+        super.onActivate();
+        IsAFK.reset(); // Setze den AFK-Timer zurück, wenn das Modul aktiviert wird
+    }
+
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (mc.player == null) return;
