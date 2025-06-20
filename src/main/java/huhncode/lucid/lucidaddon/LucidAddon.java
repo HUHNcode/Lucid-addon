@@ -15,10 +15,11 @@ import huhncode.lucid.lucidaddon.modules.ChatFonts;
 import huhncode.lucid.lucidaddon.modules.AntiItemDestroy;
 import huhncode.lucid.lucidaddon.modules.MultiCommand;
 import huhncode.lucid.lucidaddon.modules.StrongholdFinder;
+import huhncode.lucid.lucidaddon.services.KillDetectionService;
 import huhncode.lucid.lucidaddon.modules.PacketLogger;
 import huhncode.lucid.lucidaddon.modules.BetterMacros;
-
-
+import huhncode.lucid.lucidaddon.modules.KillTrackerModule;
+import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.addons.MeteorAddon;
 import meteordevelopment.meteorclient.commands.Commands;
@@ -34,11 +35,15 @@ public class LucidAddon extends MeteorAddon {
     public static final Category CATEGORY = new Category("Lucid");
     public static final HudGroup HUD_GROUP = new HudGroup("Example");
     public static final GuiTheme THEME = new MeteorGuiTheme();
+    public static KillDetectionService killDetectionService;
+
 
     @Override
     public void onInitialize() {
         LOG.info("Initializing Meteor Lucid");
 
+        killDetectionService = new KillDetectionService();
+        MeteorClient.EVENT_BUS.subscribe(killDetectionService);
         // Modules
         //Modules.get().add(new TestMessageModule());
         //Modules.get().add(new ModuleExample());
@@ -53,7 +58,7 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new StrongholdFinder());
         Modules.get().add(new PacketLogger());
         Modules.get().add(new BetterMacros());
-        
+        Modules.get().add(new KillTrackerModule());
 
         
 
