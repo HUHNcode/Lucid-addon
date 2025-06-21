@@ -19,7 +19,6 @@ import huhncode.lucid.lucidaddon.services.KillDetectionService;
 import huhncode.lucid.lucidaddon.modules.PacketLogger;
 import huhncode.lucid.lucidaddon.modules.BetterMacros;
 import huhncode.lucid.lucidaddon.modules.KillTrackerModule;
-import huhncode.lucid.lucidaddon.modules.MeteorCommandTracker;
 
 
 import meteordevelopment.meteorclient.MeteorClient;
@@ -62,7 +61,6 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new PacketLogger());
         Modules.get().add(new BetterMacros());
         Modules.get().add(new KillTrackerModule());
-        Modules.get().add(new MeteorCommandTracker());
 
         
 

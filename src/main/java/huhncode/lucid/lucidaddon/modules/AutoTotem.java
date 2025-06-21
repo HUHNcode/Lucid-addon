@@ -58,8 +58,8 @@ public class AutoTotem extends Module {
 
     private final Setting<Boolean> blockPackets = sgGeneral.add(new BoolSetting.Builder()
         .name("block-packets-while-restocking")
-        .description("Blocks certain packets while the totem is being equipped to appear more legitimate.")
-        .defaultValue(true)
+        .description("Blocks certain packets while the totem is being equipped.\n\nThis is not recommended as it can trigger anti-cheats.")
+        .defaultValue(false)
         .build()
     );
 
@@ -141,7 +141,7 @@ public class AutoTotem extends Module {
 
             if (sendClosePacket.get()) {
                 int delay = 5 + random.nextInt(36); // 5ms bis 40ms
-                ChatUtils.info("Totem Restocked, close packet sent in " + delay + "ms...");
+                //ChatUtils.info("Totem Restocked, close packet sent in " + delay + "ms...");
 
                 new Timer().schedule(new TimerTask() {
                     @Override
@@ -185,7 +185,7 @@ public class AutoTotem extends Module {
         if (!isRestocking || !blockPackets.get()) return;
 
         if (packetsToBlock.get().contains(event.packet.getClass())) {
-            ChatUtils.info("Blocking packet: " + event.packet.getClass().getSimpleName());
+            //ChatUtils.info("Blocking packet: " + event.packet.getClass().getSimpleName());
             event.cancel();
         }
     }
