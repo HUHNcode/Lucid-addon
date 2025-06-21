@@ -34,18 +34,7 @@
 -   [x] Auto gg, better kill identifier (kill effect module)
 -   [ ] Auto tot plus, still detectable
 -   [x] Chat fonts, dose not apply if there is a space after the $f
--   [ ] multi command: multiple /msg don't work
--   [ ] multi command: delay delays main thread (game freezes)
--   [ ] multi command: add chat messages (without /)
--   [ ] multi command: make Combatible with chat fonts
+-   [x] multi command: multiple /msg don't work
+-   [x] multi command: delay delays main thread (game freezes)
 -   [x] Fix kill detection on no item destroy (kill effect module)
-
-**Auto Totem Debung Client send packeges**
-
-```
-[Meteor] Packet outgoing ClickSlot025Packet [0, 127, 13, 40 SWAP, O minecraft:air, (13=>0 minecraft:air, 45=>1 minecraft.totem_of_undying)]
-
-(What got me banned:)
-[Meteor] Packet outgoing ClickSlotC2SPacket [0, 146, 11, 0, PICKUP, 1 minecraft:totem_of_undying, {11=>0 minecraft:air}]
-[Meteor] Packet outgoing ClickSlotC2SPacket [0, 146, 45, 0, PICKUP, 0 minecraft:air, {45=>1 minecraft:totem_of_undying}]
-```
+-   [ ] ChatFonts in /msg

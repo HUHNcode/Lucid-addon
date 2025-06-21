@@ -9,7 +9,6 @@ import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.meteorclient.utils.player.FindItemResult;
 import meteordevelopment.meteorclient.utils.player.InvUtils;
 import meteordevelopment.orbit.EventHandler;
-import net.minecraft.network.message.SentMessage.Chat;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -141,7 +140,7 @@ public class AutoTotem extends Module {
             totemPopped = false;
 
             if (sendClosePacket.get()) {
-                int delay = 5000 + random.nextInt(36); // 5ms bis 40ms
+                int delay = 5 + random.nextInt(36); // 5ms bis 40ms
                 ChatUtils.info("Totem Restocked, close packet sent in " + delay + "ms...");
 
                 new Timer().schedule(new TimerTask() {

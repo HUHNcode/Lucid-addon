@@ -2,12 +2,17 @@ package huhncode.lucid.lucidaddon.modules;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.events.game.SendMessageEvent;
+import meteordevelopment.meteorclient.events.packets.PacketEvent;
 import meteordevelopment.meteorclient.settings.BoolSetting;
 import meteordevelopment.meteorclient.settings.EnumSetting;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import meteordevelopment.orbit.EventHandler;
+import net.minecraft.network.message.SentMessage.Chat;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.play.ChatCommandSignedC2SPacket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -132,6 +137,32 @@ public class ChatFonts extends Module {
         event.message = convertText(event.message, fontStyle.get(), applyFromSyntax.get());
         System.out.println("Converted Message: " + event.message); // Debug-Ausgabe
     }
+
+    @EventHandler
+    private void onReceivePacket(PacketEvent.Send event) {
+        
+        Packet<?> packet = event.packet;
+        if (packet instanceof ChatCommandSignedC2SPacket) {
+            ChatCommandSignedC2SPacket chatPacket = (ChatCommandSignedC2SPacket) packet;
+            String command = chatPacket.command();
+            if (command.contains(SYNTAX_MARKER)) {
+                event.cancel();
+                String PrivateMessageCommand = command.substring(0, command.indexOf(" ", command.indexOf("msg ") + 4));
+                String PrivateMessage = command.replace(PrivateMessageCommand, "").strip();
+                
+                ChatUtils.sendPlayerMsg("/" + PrivateMessageCommand + " " + convertText(PrivateMessage, fontStyle.get(), applyFromSyntax.get()));
+                
+            }
+        } 
+
+        
+            
+            
+        
+
+
+
+    };
 
     private String convertText(String message, FontStyle style, boolean applyFromSyntax) {
         Map<Character, String> fontMap = getFontMap(style);
