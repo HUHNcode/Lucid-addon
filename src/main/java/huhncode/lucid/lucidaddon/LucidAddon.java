@@ -11,6 +11,7 @@ import huhncode.lucid.lucidaddon.modules.AfkLog;
 import huhncode.lucid.lucidaddon.modules.AutoGG;
 import huhncode.lucid.lucidaddon.modules.AutoTotem;
 import huhncode.lucid.lucidaddon.modules.ChatBot;
+import huhncode.lucid.lucidaddon.modules.AutoTreeFarmer;
 import huhncode.lucid.lucidaddon.modules.ChatFonts;
 import huhncode.lucid.lucidaddon.modules.AntiItemDestroy;
 import huhncode.lucid.lucidaddon.modules.MultiCommand;
@@ -19,7 +20,9 @@ import huhncode.lucid.lucidaddon.services.KillDetectionService;
 import huhncode.lucid.lucidaddon.modules.PacketLogger;
 import huhncode.lucid.lucidaddon.modules.BetterMacros;
 import huhncode.lucid.lucidaddon.modules.KillTrackerModule;
-
+import huhncode.lucid.lucidaddon.modules.KeyHolder;
+import huhncode.lucid.lucidaddon.modules.PingSpoofer;
+import huhncode.lucid.lucidaddon.modules.ChangingBlockStateESP;
 
 import meteordevelopment.meteorclient.MeteorClient;
 import meteordevelopment.meteorclient.addons.GithubRepo;
@@ -58,9 +61,13 @@ public class LucidAddon extends MeteorAddon {
         Modules.get().add(new AntiItemDestroy());
         Modules.get().add(new MultiCommand());
         Modules.get().add(new StrongholdFinder());
+        Modules.get().add(new AutoTreeFarmer());
         Modules.get().add(new PacketLogger());
         Modules.get().add(new BetterMacros());
         Modules.get().add(new KillTrackerModule());
+        Modules.get().add(new KeyHolder());
+        Modules.get().add(new PingSpoofer());
+        Modules.get().add(new ChangingBlockStateESP());
 
         
 

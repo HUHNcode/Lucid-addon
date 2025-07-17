@@ -29,13 +29,13 @@
     -   Detects inactivity based on movement.
     -   Option to disable **AutoReconnect** upon logout.
 
--   **Auto GG**
+-   **Auto GG +**
 
     -   Automatically sends a **GG message** after a kill.
     -   Supports random or predefined messages.
     -   Option to send the message privately as **/msg**.
 
--   **Auto Totem**
+-   **Auto Totem +**
 
     -   Automatically equips a **Totem of Undying** when one is consumed.
     -   **Random delay** to bypass anti-cheat systems.
@@ -64,9 +64,16 @@
     -   Displays the estimated coordinates in chat.
 
 -   **Packet Logger**
+
     -   Logs network packets for debugging or analysis.
     -   Option to log incoming (S2C), outgoing (C2S), or both types of packets.
     -   Can filter packets by name.
+
+-   **Kill Tracker**
+
+    -   Notifies you in chat when a player you recently hit dies.
+    -   A death is considered your kill if it occurs within a configurable time window after your last hit.
+    -   Provides the kill detection foundation for other modules like **Auto GG**.
 
 ---
 
@@ -82,6 +89,7 @@
 
 ## Contributing
 
+I am always trying to offer the best possible experience.
 Feel free to open issues or submit pull requests if you have suggestions or improvements!
 
 ---

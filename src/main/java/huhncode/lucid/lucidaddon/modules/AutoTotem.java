@@ -52,7 +52,7 @@ public class AutoTotem extends Module {
     private final Setting<Boolean> sendClosePacket = sgGeneral.add(new BoolSetting.Builder()
         .name("send-close-packet")
         .description("Sends a packet to the server as if closing the inventory after equipping the totem.")
-        .defaultValue(false) // Standardmäßig aus
+        .defaultValue(true) // Standardmäßig an
         .build()
     );
 
@@ -82,7 +82,7 @@ public class AutoTotem extends Module {
     private boolean totemPopped = false;
     private int totems;
     private long nextActionTime = 0;
-    private boolean isRestocking = false;
+    private volatile boolean isRestocking = false;
 
     public AutoTotem() {
         super(LucidAddon.CATEGORY, "Auto Totem+", "Automatically equips a totem when it is popped with a random delay to avoid anti-cheats.");
@@ -185,7 +185,7 @@ public class AutoTotem extends Module {
         if (!isRestocking || !blockPackets.get()) return;
 
         if (packetsToBlock.get().contains(event.packet.getClass())) {
-            //ChatUtils.info("Blocking packet: " + event.packet.getClass().getSimpleName());
+            ChatUtils.info("Blocking packet: " + event.packet.getClass().getSimpleName()); // Uncomment for debugging
             event.cancel();
         }
     }

@@ -27,6 +27,10 @@
 -   [ ] Walk Slow Module
 -   [ ] McTires befor name module (https://mctiers.com/api/search_profile/{player})
 -   [ ] Full block hitbox place (stairs, slabs, fence)
+-   [ ] more cps (lucidbounce cps pettern)
+-   [ ] anti server resurs pack
+-   [ ] better keybinds in better macros (ex. xray brute force)
+-   [ ] Changin Block data esp
 
 ## To Fix
 
