@@ -160,8 +160,6 @@ public class ChatFonts extends Module {
             
         
 
-
-
     };
 
     private String convertText(String message, FontStyle style, boolean applyFromSyntax) {
