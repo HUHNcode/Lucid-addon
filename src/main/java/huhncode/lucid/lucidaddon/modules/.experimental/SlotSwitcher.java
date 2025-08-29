@@ -28,12 +28,12 @@ public class SlotSwitcher extends Module {
     private final Setting<List<String>> slotMessages = sgGeneral.add(new StringListSetting.Builder()
         .name("Slot Messages")
         .description("Define slot and message pairs in format SLOT,MESSAGE")
-        .defaultValue(Arrays.asList("4,Nachricht 1", "5,Nachricht 2", "6,Nachricht 3"))
+        .defaultValue(Arrays.asList("4,Message 1", "5,Message 2", "6,Message 3"))
         .build()
     );
 
     public SlotSwitcher() {
-        super(LucidAddon.CATEGORY, "SlotSwitcher", "Wechselt Slots und sendet Nachrichten einmal beim Aktivieren.");
+        super(LucidAddon.CATEGORY, "SlotSwitcher", "Switches slots and sends messages once upon activation.");
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SlotSwitcher extends Module {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                toggle(); // Modul nach der Aktion deaktivieren
+                toggle(); // Deactivate module after the action
             }
         }, totalDelay);
     }
@@ -79,7 +79,7 @@ public class SlotSwitcher extends Module {
     private void switchSlotAndMessage(int slot, String message) {
         if (mc.player == null || mc.player.getInventory() == null) return;
         
-        mc.player.getInventory().selectedSlot = slot - 1; // Minecraft Slots starten bei 0
+        mc.player.getInventory().selectedSlot = slot - 1; // Minecraft slots start at 0
         ChatUtils.sendPlayerMsg(message);
     }
 }

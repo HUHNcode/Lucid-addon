@@ -2,19 +2,35 @@ package huhncode.lucid.lucidaddon.modules;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.events.world.TickEvent;
+import meteordevelopment.meteorclient.gui.widgets.containers.WTable;
+import meteordevelopment.meteorclient.gui.widgets.pressable.WButton;
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
+import meteordevelopment.meteorclient.settings.StringSetting;
+import meteordevelopment.meteorclient.settings.KeybindSetting;
+import meteordevelopment.meteorclient.settings.BlockListSetting;
 import meteordevelopment.meteorclient.settings.StringListSetting;
 import meteordevelopment.meteorclient.systems.modules.Module;
+import meteordevelopment.meteorclient.systems.modules.movement.GUIMove;
 import meteordevelopment.meteorclient.utils.misc.Keybind;
 import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import meteordevelopment.meteorclient.gui.GuiTheme;
+import meteordevelopment.meteorclient.gui.widgets.containers.WHorizontalList;
+import meteordevelopment.meteorclient.gui.widgets.WWidget;
 
+
+
+import java.util.Collections;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.Consumer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,20 +39,8 @@ import java.util.regex.Pattern;
 public class BetterMacros extends Module {
     private final SettingGroup sgMacros = settings.createGroup("Macros");
 
-    private final Setting<List<String>> macroList = sgMacros.add(new StringListSetting.Builder()
-        .name("macro-list")
-        .description("Creat macros whit custom cursor position. Format: key_name::text. Use $c to set the cursor position.")
-        .defaultValue(Arrays.asList("p::/tpa $c"))
-        .onChanged(list -> {
-            if (isActive()) {
-                reparseMacros();
-            } else {
-                needsReparse = true;
-            }
-        })
-        .build()
-    );
-
+    private final List<Setting<?>> macroSettings = new ArrayList<>();
+    private int macroCount = 0;
     private final List<ParsedMacro> parsedMacros = new ArrayList<>();
     private boolean needsReparse = true;
     private static final String CURSOR_MARKER = "$c";
@@ -94,6 +98,8 @@ public class BetterMacros extends Module {
         }
     }
 
+    
+    
     public BetterMacros() {
         super(LucidAddon.CATEGORY, "Better Macros", "Opens the chat input screen with predefined text and cursor position via keybind.");
     }
@@ -101,8 +107,10 @@ public class BetterMacros extends Module {
     @Override
     public void onActivate() {
         reparseMacros();
+        addMacro();
     }
-
+    
+    
     @Override
     public void onDeactivate() {
         parsedMacros.clear();
@@ -110,25 +118,52 @@ public class BetterMacros extends Module {
 
     private void reparseMacros() {
         parsedMacros.clear();
-        for (String entry : macroList.get()) {
-            String[] parts = entry.split("::", 2);
-            if (parts.length == 2) {
-                String keyName = parts[0].trim();
-                String text = parts[1];
-                Keybind kb = createKeybindFromString(keyName);
-
-                // Check if the keybind is not set (unbound).
-                // kb.isSet() returns true if a key or button is assigned.
-                if (kb == null || !kb.isSet()) {
-                    warning("Invalid key name '%s' in macro entry: %s", keyName, entry);
-                    continue;
-                }
-                parsedMacros.add(new ParsedMacro(kb, text));
-            } else {
-                warning("Invalid macro format (must be key_name::text): %s", entry);
+        for (int i = 0; i < macroSettings.size() - 1; i += 2) { // Schrittweite 2, da wir Paare von Text und Keybind haben
+            Setting<String> textSetting = (Setting<String>) macroSettings.get(i);
+            Setting<Keybind> keybindSetting = (Setting<Keybind>) macroSettings.get(i + 1);
+            if (textSetting != null && keybindSetting != null) {
+                parsedMacros.add(new ParsedMacro(keybindSetting.get(), textSetting.get()));
             }
         }
-        needsReparse = false;
+        needsReparse = false;    
+    }
+
+    private void addMacro(GuiTheme theme) {
+        macroCount++;
+        String macroName = "Macro " + macroCount;
+
+        // Create settings with default values
+        Setting<String> textSetting = sgMacros.add(new StringSetting.Builder()
+            .name(macroName + " Text")
+            .description("Text for " + macroName + ".")
+            .defaultValue("Type your macro text here with $c for cursor position")
+            .onChanged(this::onSettingChanged)
+            .build()
+        );
+        Setting<Keybind> keybindSetting = sgMacros.add(new KeybindSetting.Builder()
+            .name(macroName + " Keybind")
+            .description("Keybind for " + macroName + ".")
+            .defaultValue(Keybind.none())
+            .onChanged(this::onSettingChanged)
+            .build()
+        );
+        macroSettings.addAll(Arrays.asList(textSetting, keybindSetting));
+
+        WTable table = theme.table();
+        WButton removeButton = table.add(theme.button("Remove Macro")).expandX().widget();
+        removeButton.action = () -> {
+            int index = macroSettings.indexOf(keybindSetting);
+            if (index >= 1) {
+                macroSettings.remove(index); // Remove keybind
+                macroSettings.remove(index - 1); // Remove text
+                reparseMacros();
+            }
+        };
+        
+    }
+
+    private <T> void onSettingChanged(T value) {
+        needsReparse = true;
     }
 
     @EventHandler
@@ -139,10 +174,11 @@ public class BetterMacros extends Module {
             reparseMacros();
         }
 
+
         if (mc.currentScreen != null) return; // Don't execute if a GUI is open
 
         for (ParsedMacro pm : parsedMacros) {
-            if (pm.keybind.isPressed()) { // Changed from wasPressed() to isPressed()
+            if (pm.keybind.isPressed()) {
                 openChatWithMacroLogic(pm.textWithCursor);
             }
         }
@@ -177,4 +213,35 @@ public class BetterMacros extends Module {
             }
         });
     }
+    @Override
+    public WWidget getWidget(GuiTheme theme) {
+        WTable table = theme.table();
+        macroSettings.sort(Comparator.comparing(setting -> setting.name));
+
+        for (int i = 0; i < macroSettings.size(); i++) {
+            Setting<?> setting = macroSettings.get(i);
+            if (i % 2 == 0) { // Textfeld auf der linken Seite
+                table.add(theme.label(setting.name)).minWidth(200); // Adjust width as needed
+            } else { // Keybind on the right side
+                table.add(theme.label(setting.name)).minWidth(100); // Adjust width as needed
+
+                // Add remove button
+                WButton removeButton = table.add(theme.button("Remove")).widget();
+                removeButton.action = () -> {
+                    int index = macroSettings.indexOf(setting);
+                    if (index >= 1) {
+                        macroSettings.remove(index); // Remove keybind
+                        macroSettings.remove(index - 1); // Remove text
+                        reparseMacros();
+                    }
+                };
+                table.row();
+            }
+        }
+        WButton addButton = table.add(theme.button("Add Macro")).expandX().widget();
+        addButton.action = () -> addMacro();
+
+        return table;
+    }
+
 }

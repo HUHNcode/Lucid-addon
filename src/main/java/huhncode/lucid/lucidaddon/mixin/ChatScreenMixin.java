@@ -13,14 +13,14 @@ public abstract class ChatScreenMixin {
 
     @Redirect(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setScreen(Lnet/minecraft/client/gui/screen/Screen;)V"))
     private void lucidAddon$conditionallyCloseChatOnEnter(MinecraftClient instance, Screen screen) {
-        // Prüfe, ob der Aufruf mc.setScreen(null) ist (was nach dem Senden einer Nachricht passiert)
-        // und ob unser Flag gesetzt ist.
+        // Check if the call is mc.setScreen(null) (which happens after sending a message)
+        // and if our flag is set.
         if (screen == null && PlayerInfoCommand.isOpeningPlayerInfoGui()) {
-            PlayerInfoCommand.setOpeningPlayerInfoGui(false); // Setze das Flag zurück
-            // Rufe instance.setScreen(null) NICHT auf, um das Schließen zu verhindern.
-            // Unsere GUI wurde bereits (oder wird gerade) über mc.execute() gesetzt.
+            PlayerInfoCommand.setOpeningPlayerInfoGui(false); // Reset the flag
+            // Do NOT call instance.setScreen(null) to prevent closing.
+            // Our GUI has already been (or is being) set via mc.execute().
         } else {
-            instance.setScreen(screen); // Führe das ursprüngliche Verhalten aus
+            instance.setScreen(screen); // Execute the original behavior
         }
     }
 }

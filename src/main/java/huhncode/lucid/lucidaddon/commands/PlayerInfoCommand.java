@@ -5,14 +5,14 @@ import meteordevelopment.meteorclient.commands.Command;
 import meteordevelopment.meteorclient.commands.arguments.PlayerArgumentType;
 import meteordevelopment.meteorclient.commands.arguments.PlayerListEntryArgumentType;
 import huhncode.lucid.lucidaddon.ui.PlayerInfoDisplay;
-// Importe waren teilweise doppelt oder nicht mehr benötigt
+// Imports were partially duplicated or no longer needed
 import com.mojang.brigadier.arguments.StringArgumentType;
 // import meteordevelopment.meteorclient.commands.Command;
 import meteordevelopment.meteorclient.utils.player.ChatUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.suggestion.SuggestionProviders;
-// import net.minecraft.command.argument.EntityArgumentType; // Nicht für Client-seitige Spielersuche benötigt
+// import net.minecraft.command.argument.EntityArgumentType; // Not needed for client-side player search
 import net.minecraft.entity.player.PlayerEntity;
 
 
@@ -36,7 +36,7 @@ public class PlayerInfoCommand extends Command {
 
     @Override
     public void build(LiteralArgumentBuilder<CommandSource> builder) {
-        // Verwende StringArgumentType für den Spielernamen
+        // Use StringArgumentType for the player name
         builder.then(argument("player", PlayerListEntryArgumentType.create())
             
             .executes(context -> {
@@ -63,9 +63,9 @@ public class PlayerInfoCommand extends Command {
                 
 
                 final PlayerEntity finalPlayer = player;
-                setOpeningPlayerInfoGui(true); // Signalisiere, dass wir die GUI öffnen wollen
+                setOpeningPlayerInfoGui(true); // Signal that we want to open the GUI
 
-                // Stelle sicher, dass dies auf dem Client-Thread für GUI-Operationen ausgeführt wird
+                // Ensure this is executed on the client thread for GUI operations
                 MinecraftClient.getInstance().execute(() -> {
                     PlayerInfoDisplay.show(finalPlayer);
                 });

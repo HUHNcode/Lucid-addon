@@ -35,10 +35,10 @@ public class MultiCommand extends Module{
             String[] commands = command.split("&&");
 
             for (String c : commands) {
-                c = c.strip(); // Whitespace entfernen
+                c = c.strip(); // Remove whitespace
                 
 
-                // Alles was mit Minecraft-API zu tun hat, muss im Main Thread ausgeführt werden!
+                // Everything related to the Minecraft API must be executed on the main thread!
                 String finalCommand = c;
                 mc.execute(() -> {
                     if (finalCommand.startsWith("/")) {
@@ -52,7 +52,7 @@ public class MultiCommand extends Module{
                     }
                 });
 
-                // Delay zwischen den Befehlen (z. B. 500 ms)
+                // Delay between commands (e.g., 500 ms)
                 try {
                     Thread.sleep(delay.get()); // delay.get() in ms
                 } catch (InterruptedException e) {
@@ -120,4 +120,3 @@ public class MultiCommand extends Module{
 }
 
     
-

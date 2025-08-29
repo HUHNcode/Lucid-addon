@@ -21,9 +21,9 @@ public class AfkLog extends Module {
     private final Setting<Integer> afkDelay = sgGeneral.add(new IntSetting.    Builder()
         .name("afk-delay")
         .description("How long do you have to be AFK before logging out? (in seconds)")
-        .defaultValue(60) // 60 Sekunden
-        .min(5) // 5 Sekunden
-        .max(300) // 5 Minuten
+        .defaultValue(60) // 60 seconds
+        .min(5) // 5 seconds
+        .max(300) // 5 minutes
         .sliderMax(300)
         .build()
     );
@@ -42,14 +42,14 @@ public class AfkLog extends Module {
     @Override
     public void onActivate() {
         super.onActivate();
-        IsAFK.reset(); // Setze den AFK-Timer zurück, wenn das Modul aktiviert wird
+        IsAFK.reset(); // Reset the AFK timer when the module is activated
     }
 
     @EventHandler
     private void onTick(TickEvent.Post event) {
         if (mc.player == null) return;
-        // Wenn der Spieler neu beigetreten ist (weniger als ca. 1 Sekunde alt), den AFK-Zustand zurücksetzen
-        if (mc.player.age < 20) { // Annahme: 20 Ticks pro Sekunde
+        // If the player has just joined (less than approx. 1 second old), reset the AFK state
+        if (mc.player.age < 20) { // Assumption: 20 ticks per second
             IsAFK.reset();
             return;
         }
@@ -64,7 +64,7 @@ public class AfkLog extends Module {
 
     private void disconnect(Text reason) {
         if (toggleAutoReconnect.get()) {
-            // Falls AutoReconnect in deiner Version nicht existiert, kannst du diesen Teil entfernen
+            // If AutoReconnect does not exist in your version, you can remove this part
             Modules.get().get(AutoReconnect.class).toggle();
         }
         mc.player.networkHandler.onDisconnect(new DisconnectS2CPacket(reason));

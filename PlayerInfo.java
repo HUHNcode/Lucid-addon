@@ -3,7 +3,7 @@ package huhncode.lucid.lucidaddon.modules;
 import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.events.game.SendMessageEvent;
 import meteordevelopment.meteorclient.gui.GuiThemes;
-import meteordevelopment.meteorclient.gui.screens.WidgetScreen; // Verwende WidgetScreen
+import meteordevelopment.meteorclient.gui.screens.WidgetScreen; // Use WidgetScreen
 import meteordevelopment.meteorclient.gui.widgets.WWidget;
 import meteordevelopment.meteorclient.gui.widgets.containers.WVerticalList;
 import meteordevelopment.meteorclient.systems.modules.Module;
@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 public class PlayerInfo extends Module {
 
     public PlayerInfo() {
-        super(LucidAddon.CATEGORY, "player-info", "Zeigt eine GUI mit Informationen zu einem Spieler an.");
+        super(LucidAddon.CATEGORY, "player-info", "Displays a GUI with information about a player.");
     }
 
     @EventHandler
@@ -29,16 +29,16 @@ public class PlayerInfo extends Module {
             .orElse(null);
 
         if (player == null) {
-            info("Spieler nicht gefunden: " + playerName);
+            info("Player not found: " + playerName);
             return;
         }
 
-        // Zeige die benutzerdefinierte WidgetScreen-GUI an
+        // Show the custom WidgetScreen GUI
         mc.execute(() -> mc.setScreen(new PlayerInfoScreen(player)));
         event.cancel();
     }
 
-    private static class PlayerInfoScreen extends WidgetScreen { // WidgetScreen anstelle von WScreen
+    private static class PlayerInfoScreen extends WidgetScreen { // WidgetScreen instead of WScreen
         private final PlayerListEntry player;
 
         public PlayerInfoScreen(PlayerListEntry player) {
@@ -47,12 +47,12 @@ public class PlayerInfo extends Module {
 
         @Override
         public void init() {
-            // Initialisiere die GUI und Widgets
+            // Initialize the GUI and widgets
             WVerticalList list = new WVerticalList();
-            list.add(theme.label(Text.of("Spielername: " + player.getProfile().getName())));
+            list.add(theme.label(Text.of("Player name: " + player.getProfile().getName())));
             list.add(theme.label(Text.of("Ping: " + player.getLatency() + " ms")));
-            // Weitere Informationen können hier hinzugefügt werden
-            this.add(list); // Füge das Widget hinzu
+            // More information can be added here
+            this.add(list); // Add the widget
         }
 
         @Override

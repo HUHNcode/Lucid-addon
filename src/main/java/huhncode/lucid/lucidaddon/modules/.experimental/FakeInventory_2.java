@@ -14,33 +14,33 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 /**
- * Dieses Modul zeigt ein Fake-Inventar (Chest GUI) an, sobald es aktiviert wird.
- * Über die Settings lassen sich Anzahl der Zeilen und das automatische Öffnen konfigurieren.
+ * This module displays a fake inventory (Chest GUI) as soon as it is activated.
+ * The number of rows and automatic opening can be configured via the settings.
  */
 public class FakeInventory extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     
-    // Konfigurierbare Anzahl der Zeilen (jede Zeile hat 9 Slots)
+    // Configurable number of rows (each row has 9 slots)
     public final Setting<Integer> rows = sgGeneral.add(new IntSetting.Builder()
         .name("rows")
-        .description("Anzahl der Zeilen im Fake-Inventar")
+        .description("Number of rows in the fake inventory")
         .defaultValue(3)
         .min(1)
         .max(6)
         .build()
     );
     
-    // Automatisches Öffnen beim Aktivieren des Moduls
+    // Automatic opening when activating the module
     public final Setting<Boolean> autoOpen = sgGeneral.add(new BoolSetting.Builder()
         .name("auto-open")
-        .description("Öffnet das Inventar automatisch bei Aktivierung")
+        .description("Opens the inventory automatically upon activation")
         .defaultValue(true)
         .build()
     );
     
     public FakeInventory() {
-        // Passe die Kategorie an, wie sie in deinem LucidAddon definiert ist.
-        super(huhncode.lucid.lucidaddon.LucidAddon.CATEGORY, "fake-inventory", "Zeigt ein Fake-Inventar (Chest GUI) an.");
+        // Adjust the category as defined in your LucidAddon.
+        super(huhncode.lucid.lucidaddon.LucidAddon.CATEGORY, "fake-inventory", "Displays a fake inventory (Chest GUI).");
     }
     
     @Override
@@ -51,16 +51,16 @@ public class FakeInventory extends Module {
     }
     
     /**
-     * Öffnet das Fake-Inventar. Es wird ein Dummy-Inventar erstellt, in dem beispielhaft
-     * in Slot 0 ein Diamantschwert, in Slot 9 ein Eisenbrustpanzer und in Slot 18 ein goldener Apfel platziert wird.
+     * Opens the fake inventory. A dummy inventory is created in which, for example,
+     * a diamond sword is placed in slot 0, an iron chestplate in slot 9, and a golden apple in slot 18.
      */
     public void openFakeInventory() {
         int rowsValue = rows.get();
         int slots = rowsValue * 9;
         
         GenericContainerScreenHandler handler = new GenericContainerScreenHandler(
-            ScreenHandlerType.GENERIC_9X6, // GENERIC_9X6 deckt bis zu 6 Zeilen ab
-            0,                           // Dummy-Sync-ID (clientseitig, daher irrelevant)
+            ScreenHandlerType.GENERIC_9X6, // GENERIC_9X6 covers up to 6 rows
+            0,                           // Dummy sync ID (client-side, therefore irrelevant)
             mc.player.getInventory(),
             new FakeInventoryInventory(slots),
             rowsValue
@@ -69,12 +69,12 @@ public class FakeInventory extends Module {
         mc.setScreen(new GenericContainerScreen(handler, mc.player.getInventory(), Text.literal("Fake Inventory")));
     }
     
-    // Innere Klasse: Dummy-Inventar, das beispielhafte Items in bestimmten Slots platziert.
+    // Inner class: Dummy inventory that places example items in specific slots.
     private static class FakeInventoryInventory extends SimpleInventory {
         public FakeInventoryInventory(int size) {
             super(size);
-            // Befülle exemplarisch:
-            // Slot 0: Diamantschwert, Slot 9: Eisenbrustpanzer, Slot 18: Goldener Apfel
+            // Fill with examples:
+            // Slot 0: Diamond sword, Slot 9: Iron chestplate, Slot 18: Golden apple
             setStack(0, new ItemStack(Items.DIAMOND_SWORD));
             setStack(9, new ItemStack(Items.IRON_CHESTPLATE));
             setStack(18, new ItemStack(Items.GOLDEN_APPLE));

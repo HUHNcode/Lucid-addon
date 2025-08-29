@@ -52,7 +52,7 @@ public class AutoTotem extends Module {
     private final Setting<Boolean> sendClosePacket = sgGeneral.add(new BoolSetting.Builder()
         .name("send-close-packet")
         .description("Sends a packet to the server as if closing the inventory after equipping the totem.")
-        .defaultValue(true) // Standardmäßig an
+        .defaultValue(true) // On by default
         .build()
     );
 
@@ -95,23 +95,23 @@ public class AutoTotem extends Module {
 
         long currentTime = System.currentTimeMillis();
 
-        if (!totemPopped || currentTime < nextActionTime) return; // Warte auf den Delay nach Totem-Pop
+        if (!totemPopped || currentTime < nextActionTime) return; // Wait for the delay after totem pop
         if (mc.player == null || mc.getNetworkHandler() == null) {
             totemPopped = false; // Reset if player or network handler is null
             isRestocking = false;
             return;
         }
 
-        // Warte, bis der Offhand-Slot tatsächlich leer ist.
-        // Das vermeidet Probleme mit der Synchronisation und verhindert, dass andere Items ersetzt werden.
+        // Wait until the offhand slot is actually empty.
+        // This avoids synchronization problems and prevents other items from being replaced.
         ItemStack offhandStack = mc.player.getOffHandStack();
         if (!offhandStack.isEmpty()) {
-            // Wenn bereits ein neues Totem da ist, ist unsere Arbeit getan.
+            // If a new totem is already there, our work is done.
             if (offhandStack.getItem() == Items.TOTEM_OF_UNDYING) {
                 totemPopped = false;
                 isRestocking = false;
             }
-            // Ansonsten warten wir, bis der Slot frei wird. Wir setzen das Flag nicht zurück.
+            // Otherwise, we wait until the slot is free. We do not reset the flag.
             return;
         }
 
@@ -124,12 +124,12 @@ public class AutoTotem extends Module {
                 isRestocking = true;
             }
 
-            // BUGFIX: InvUtils.find() gibt einen Inventar-Slot zurück, aber clickSlot() benötigt einen Bildschirm-Slot.
-            // Das führte dazu, dass Hotbar-Slot-IDs (z.B. 6) als Bildschirm-Slot-IDs verwendet wurden,
-            // was Rüstungs-Slots (z.B. Brustplatte) entspricht und das falsche Item bewegt hat.
+            // BUGFIX: InvUtils.find() returns an inventory slot, but clickSlot() needs a screen slot.
+            // This caused hotbar slot IDs (e.g., 6) to be used as screen slot IDs,
+            // which corresponds to armor slots (e.g., chestplate) and moved the wrong item.
             int screenSlot = result.slot();
             if (result.isHotbar()) {
-                screenSlot += 36; // Konvertiert den Hotbar-Inventar-Slot in die korrekte Bildschirm-Slot-ID.
+                screenSlot += 36; // Converts the hotbar inventory slot to the correct screen slot ID.
             }
 
             // The previous method used two PICKUP packets, which is easily detected by anti-cheats.
@@ -140,7 +140,7 @@ public class AutoTotem extends Module {
             totemPopped = false;
 
             if (sendClosePacket.get()) {
-                int delay = 5 + random.nextInt(36); // 5ms bis 40ms
+                int delay = 5 + random.nextInt(36); // 5ms to 40ms
                 //ChatUtils.info("Totem Restocked, close packet sent in " + delay + "ms...");
 
                 new Timer().schedule(new TimerTask() {
@@ -148,16 +148,16 @@ public class AutoTotem extends Module {
                     public void run() {
                         if (mc.player != null) {
                             mc.execute(() -> {
-                                // Wenn ein GUI-Fenster offen ist, schließe es auf die saubere Art.
+                                // If a GUI window is open, close it cleanly.
                                 if (mc.currentScreen != null) {
                                     mc.player.closeHandledScreen();
                                 }
-                                // Wenn kein Fenster offen ist, sende trotzdem das Paket für das Spieler-Inventar.
-                                // Das ist wichtig, um die Aktion für Anti-Cheats zu legitimieren.
+                                // If no window is open, still send the packet for the player inventory.
+                                // This is important to legitimize the action for anti-cheats.
                                 else {
                                     mc.getNetworkHandler().sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
                                 }
-                                isRestocking = false; // Gib die Sperre nach dem Senden frei.
+                                isRestocking = false; // Release the lock after sending.
                             });
                         } else {
                             isRestocking = false; // Failsafe
@@ -198,7 +198,7 @@ public class AutoTotem extends Module {
         net.minecraft.entity.Entity entity = p.getEntity(mc.world);
         if (entity == null || !entity.equals(mc.player)) return;
 
-        // Totem ist geplatzt, Delay aktivieren
+        // Totem popped, activate delay
         totemPopped = true;
         nextActionTime = System.currentTimeMillis() + baseDelay.get() + random.nextInt(randomDelay.get() + 1);
     }

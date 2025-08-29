@@ -2,8 +2,7 @@ package huhncode.lucid.lucidaddon.modules;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
 import meteordevelopment.meteorclient.systems.modules.Module;
-import meteordevelopment.meteorclient.events.world.TickEvent;
-// Die folgenden Imports werden nicht mehr benötigt, da die Kill-Erkennung ausgelagert wird.
+import meteordevelopment.meteorclient.events.world.TickEvent; // The following imports are no longer needed as kill detection is outsourced.
 // import meteordevelopment.meteorclient.events.entity.player.AttackEntityEvent;
 // import meteordevelopment.meteorclient.events.packets.PacketEvent;
 import meteordevelopment.meteorclient.settings.*;
@@ -27,7 +26,7 @@ public class AutoGG extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    // Die Einstellung killWindowSeconds wird nicht mehr benötigt, da dies vom KillDetectionService gehandhabt wird.
+    // The killWindowSeconds setting is no longer needed as this is handled by the KillDetectionService.
     // private final Setting<Integer> killWindowSeconds = sgGeneral.add(new IntSetting.Builder()
     //     .name("kill-window-seconds")
     //     .description("Time window in seconds after hitting a player to consider their death as your kill.")
@@ -51,8 +50,8 @@ public class AutoGG extends Module {
         .description("The number of seconds within which a player's death is attributed to you after hitting them. This setting determines the time window for your hit to be considered as a kill.")
         .defaultValue(5)
         .min(1)
-        .sliderMax(30)
-        .onChanged(this::onSettingChange) // Korrigiert: .withListener zu .onChanged geändert
+        .sliderMax(30) // Corrected: changed .withListener to .onChanged
+        .onChanged(this::onSettingChange)
         .build()
     );
 
@@ -82,7 +81,7 @@ public class AutoGG extends Module {
     private boolean shouldSend = false;
     private int messageIndex = 0;
     private String lastKilledPlayer = "";
-    // Die recentHits Map wird nicht mehr benötigt, da dies vom KillDetectionService gehandhabt wird.
+    // The recentHits map is no longer needed as this is handled by the KillDetectionService.
     // private final Map<UUID, Long> recentHits = new ConcurrentHashMap<>();
 
     @Override
@@ -91,7 +90,7 @@ public class AutoGG extends Module {
         timer = 0;
         shouldSend = false;
         messageIndex = 0;
-        // recentHits.clear(); // Nicht mehr benötigt
+        // recentHits.clear(); // No longer needed
         onSettingChange(hitValiditySeconds.get());
     }
 
@@ -103,17 +102,17 @@ public class AutoGG extends Module {
     }
     
 
-    // Lausche auf das PlayerKillEvent, das vom KillDetectionService ausgelöst wird
+    // Listen for the PlayerKillEvent, which is triggered by the KillDetectionService
     @EventHandler
     private void onPlayerKill(PlayerKillEvent event) {
-        // Überprüfe, ob der lokale Spieler der Killer ist
+        // Check if the local player is the killer
         if (mc.player != null && event.killer.equals(mc.player)) {
-            // ChatUtils.info("[AutoGG] PlayerKillEvent received for: " + event.killed.getName().getString()); // Optional: für Debugging
+            // ChatUtils.info("[AutoGG] PlayerKillEvent received for: " + event.killed.getName().getString()); // Optional: for debugging
             triggerGG(event.killed.getName().getString());
         }
     }
 
-    // Die folgenden Event-Handler für die direkte Kill-Erkennung werden nicht mehr benötigt:
+    // The following event handlers for direct kill detection are no longer needed:
     // @EventHandler
     // private void onAttackEntity(AttackEntityEvent event) { ... }
     // @EventHandler
@@ -127,7 +126,7 @@ public class AutoGG extends Module {
 
     @EventHandler
     private void onTick(TickEvent.Pre event) {
-        // Die Logik zum Aufräumen der recentHits Map ist nicht mehr hier, sondern im KillDetectionService
+        // The logic for cleaning up the recentHits map is no longer here, but in the KillDetectionService
         // if (mc.player != null) { ... }
 
         if (!shouldSend) return;

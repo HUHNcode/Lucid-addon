@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class ChangingBlockStateESP extends Module {
 
-    // Innere Klasse, um alle Informationen zu einem Block-Update zu speichern
+    // Inner class to store all information about a block update
     private static class BlockUpdateInfo {
         public final BlockPos pos;
         public final String changeText;
@@ -50,18 +50,18 @@ public class ChangingBlockStateESP extends Module {
                 return oldState.getBlock().getName().getString() + " -> " + newState.getBlock().getName().getString();
             } else {
                 List<String> changes = new ArrayList<>();
-                // Wir vergleichen die Werte für jede Eigenschaft des Blocks.
+                // We compare the values for each property of the block.
                 for (Property<?> property : oldState.getProperties()) {
                     Comparable<?> oldValue = oldState.get(property);
                     Comparable<?> newValue = newState.get(property);
 
-                    // Objects.equal ist sicher, auch wenn die Werte null sein sollten.
+                    // Objects.equal is safe, even if the values are null.
                     if (!Objects.equal(oldValue, newValue)) {
                         changes.add(String.format("%s: %s -> %s", property.getName(), oldValue, newValue));
                     }
                 }
 
-                // Wenn es Änderungen gab, geben wir sie im gewünschten Format zurück.
+                // If there were changes, we return them in the desired format.
                 return changes.isEmpty() ? "" : "[" + String.join(", ", changes) + "]";
             }
         }
@@ -70,7 +70,7 @@ public class ChangingBlockStateESP extends Module {
     private final SettingGroup sgRender = settings.createGroup("Render");
     private final SettingGroup sgChat = settings.createGroup("Chat");
     private final SettingGroup sgFilter = settings.createGroup("Filter");
-    // Neue, spezifische Gruppen für die Listen
+    // New, specific groups for the lists
     private final SettingGroup sgPlacementFilter = settings.createGroup("Placement Filter");
     private final SettingGroup sgBreakingFilter = settings.createGroup("Breaking Filter");
     private final SettingGroup sgStateChangeFilter = settings.createGroup("State Change Filter");
@@ -78,7 +78,7 @@ public class ChangingBlockStateESP extends Module {
     // Render Settings
     private final Setting<Integer> renderTime = sgRender.add(new IntSetting.Builder()
         .name("render-time")
-        .description("Wie lange die Box in Ticks gerendert werden soll.")
+        .description("How long the box should be rendered in ticks.")
         .defaultValue(40)
         .min(1)
         .sliderMax(200)
@@ -87,21 +87,21 @@ public class ChangingBlockStateESP extends Module {
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
-        .description("Wie die Box gerendert werden soll.")
+        .description("How the box should be rendered.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
-        .description("Die Farbe der Seiten der Box.")
+        .description("The color of the sides of the box.")
         .defaultValue(new SettingColor(0, 255, 0, 75))
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
-        .description("Die Farbe der Linien der Box.")
+        .description("The color of the lines of the box.")
         .defaultValue(new SettingColor(0, 255, 0, 255))
         .build()
     );
@@ -124,7 +124,7 @@ public class ChangingBlockStateESP extends Module {
     // Chat Settings
     private final Setting<Boolean> logToChat = sgChat.add(new BoolSetting.Builder()
         .name("log-to-chat")
-        .description("Gibt die Zustandsänderung im Chat aus.")
+        .description("Outputs the state change in chat.")
         .defaultValue(true)
         .build()
     );
@@ -148,6 +148,15 @@ public class ChangingBlockStateESP extends Module {
         .name("render-state-changes")
         .description("Renders a box when a block's state changes (e.g., lever toggled).")
         .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Integer> ignoreRange = sgFilter.add(new IntSetting.Builder()
+        .name("ignore-range")
+        .description("Does not log or render block changes within this distance to you. 0 to disable.")
+        .defaultValue(8)
+        .min(0)
+        .sliderMax(32)
         .build()
     );
 
@@ -217,7 +226,7 @@ public class ChangingBlockStateESP extends Module {
             Blocks.SAND, Blocks.RED_SAND, Blocks.GRAVEL, Blocks.SUSPICIOUS_SAND, Blocks.SUSPICIOUS_GRAVEL,
            
             // Others
-            Blocks.LAVA, Blocks.WATER, Blocks.FIRE, Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.CAVE_VINES, Blocks.CAVE_VINES_PLANT,
+            Blocks.LAVA, Blocks.WATER, Blocks.FIRE, Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.CAVE_VINES, Blocks.SCULK_VEIN, Blocks.CAVE_VINES_PLANT, Blocks.AZALEA, Blocks.BIG_DRIPLEAF, Blocks.BIG_DRIPLEAF_STEM, Blocks.SMALL_DRIPLEAF, Blocks.FLOWERING_AZALEA,
 
             // Leaf Types
             Blocks.OAK_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LEAVES,
@@ -305,13 +314,13 @@ public class ChangingBlockStateESP extends Module {
     private void onPacketReceive(PacketEvent.Receive event) {
         if (mc.world == null || mc.player == null) return;
 
-        // Einzelne Block-Änderung
+        // Single block change
         if (event.packet instanceof BlockUpdateS2CPacket packet) {
             // By listening with high priority, we get the state *before* the game processes the packet.
             BlockState oldState = mc.world.getBlockState(packet.getPos());
             handleBlockChange(packet.getPos(), oldState, packet.getState());
         }
-        // Mehrere Block-Änderungen in einem Chunk
+        // Multiple block changes in a chunk
         else if (event.packet instanceof ChunkDeltaUpdateS2CPacket packet) {
             packet.visitUpdates((pos, newState) -> {
                 BlockState oldState = mc.world.getBlockState(pos);
@@ -324,6 +333,15 @@ public class ChangingBlockStateESP extends Module {
         // If the state hasn't actually changed, do nothing.
         if (oldState.equals(newState)) {
             return;
+        }
+
+        // Filter by distance from player
+        int range = ignoreRange.get();
+        if (range > 0 && mc.player != null) {
+            // Using squared distance for performance. A distance of 8 means anything <= 8 blocks away is ignored.
+            if (pos.getSquaredDistance(mc.player.getBlockPos()) <= (double) range * range) {
+                return;
+            }
         }
 
         BlockPos immutablePos = pos.toImmutable();
@@ -351,11 +369,15 @@ public class ChangingBlockStateESP extends Module {
                 if (!breakingWhitelist.get().contains(blockToCheck)) return;
             }
         } else { // isStateChange
-            Block blockToCheck = newState.getBlock();
+            Block oldBlock = oldState.getBlock();
+            Block newBlock = newState.getBlock();
             if (stateChangeListMode.get() == ListMode.Blacklist) {
-                if (stateChangeBlacklist.get().contains(blockToCheck)) return;
+                // If either the old or the new block is on the blacklist, ignore the change.
+                if (stateChangeBlacklist.get().contains(oldBlock) || stateChangeBlacklist.get().contains(newBlock)) return;
             } else { // Whitelist
-                if (!stateChangeWhitelist.get().contains(blockToCheck)) return;
+                // If neither the old nor the new block is on the whitelist, ignore the change.
+                // (i.e., at least one must be on it to be displayed)
+                if (!stateChangeWhitelist.get().contains(oldBlock) && !stateChangeWhitelist.get().contains(newBlock)) return;
             }
         }
 

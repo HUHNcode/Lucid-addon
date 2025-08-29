@@ -135,7 +135,7 @@ public class ChatFonts extends Module {
     @EventHandler
     private void onMessageSend(SendMessageEvent event) {
         event.message = convertText(event.message, fontStyle.get(), applyFromSyntax.get());
-        System.out.println("Converted Message: " + event.message); // Debug-Ausgabe
+        System.out.println("Converted Message: " + event.message); // Debug output
     }
 
     @EventHandler
@@ -176,16 +176,16 @@ public class ChatFonts extends Module {
             while (index < message.length()) {
                 int markerIndex = message.indexOf(SYNTAX_MARKER, index);
                 if (markerIndex == -1) {
-                    // Wenn kein Marker mehr gefunden wird, füge den Rest des Texts hinzu
+                    // If no more markers are found, add the rest of the text
                     result.append(applyingFont ? applyFont(message.substring(index), fontMap) : message.substring(index));
                     break;
                 }
 
-                // Text vor dem Marker
+                // Text before the marker
                 result.append(applyingFont ? applyFont(message.substring(index, markerIndex), fontMap) : message.substring(index, markerIndex));
-                // Toggle den Status der Formatierung
+                // Toggle the formatting status
                 applyingFont = !applyingFont;
-                // Springe über den Marker
+                // Skip over the marker
                 index = markerIndex + SYNTAX_MARKER.length();
             }
             return result.toString();

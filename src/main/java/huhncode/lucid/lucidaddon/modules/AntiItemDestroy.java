@@ -19,9 +19,9 @@ public class AntiItemDestroy extends Module {
 
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
 
-    // Zeitpunkt, bis zu dem das Brechen von Kristallen blockiert ist
+    // Time until which crystal breaking is blocked
     private long blockCrystalBreakingUntil = 0;
-    private BlockPos deathLocation = null; // Speichert den Todesort des Spielers
+    private BlockPos deathLocation = null; // Stores the player's death location
 
     public AntiItemDestroy() {
         super(LucidAddon.CATEGORY, "AntiItemDestroy", "Blocks crystal and anchor interactions for a short time after a player's death.\n" +
@@ -31,16 +31,16 @@ public class AntiItemDestroy extends Module {
     private final Setting<Integer> delay = sgGeneral.add(new IntSetting.Builder()
             .name("delay")
             .description("Duration in milliseconds for which crystal breaking is blocked after a player's death.")
-            .defaultValue(3000) // Standardmäßig 5 Sekunden
+            .defaultValue(3000) // Default 5 seconds
             .min(0)
-            .sliderMax(10000) // Slider bis 10 Sekunden
+            .sliderMax(10000) // Slider up to 10 seconds
             .build());
 
     private final Setting<Integer> deathRadius = sgGeneral.add(new IntSetting.Builder()
         .name("death-radius")
         .description("The radius in blocks around the crystal/anchor within which a player must die to trigger the block.")
         .defaultValue(13)
-        .min(0) // 0 deaktiviert die Radiusprüfung
+        .min(0) // 0 disables the radius check
         .sliderMax(50)
         .build()
     );
@@ -49,11 +49,11 @@ public class AntiItemDestroy extends Module {
     @EventHandler
     private void onEntityDeath(PacketEvent.Receive event) {
         if (event.packet instanceof EntityStatusS2CPacket packet) {
-            if (packet.getStatus() == 3 && mc.world != null && mc.player != null) { // Status 3 = Entität stirbt
+            if (packet.getStatus() == 3 && mc.world != null && mc.player != null) { // Status 3 = entity dies
                 Entity entity = packet.getEntity(mc.world);
                 if (entity instanceof PlayerEntity && entity != mc.player) {
-                    // Speichere den Todesort und aktiviere die Blockade
-                    // Die eigentliche Radiusprüfung findet beim Interaktionsversuch statt.
+                    // Save the death location and activate the block
+                    // The actual radius check happens during the interaction attempt.
                     deathLocation = entity.getBlockPos();
                     blockCrystalBreakingUntil = System.currentTimeMillis() + delay.get();
                     ChatUtils.info(String.format("Player %s died at %s. Interactions might be blocked for %d ms within %d blocks.",
@@ -84,16 +84,16 @@ public class AntiItemDestroy extends Module {
     }
 
     private boolean shouldBlockInteraction(BlockPos interactionPos) {
-        if (System.currentTimeMillis() >= blockCrystalBreakingUntil) return false; // Zeit abgelaufen
-        if (deathLocation == null) return false; // Kein kürzlicher Tod registriert
+        if (System.currentTimeMillis() >= blockCrystalBreakingUntil) return false; // Time expired
+        if (deathLocation == null) return false; // No recent death registered
 
         int radius = deathRadius.get();
-        if (radius <= 0) return true; // Radiusprüfung deaktiviert, blockiere, wenn Zeit noch nicht abgelaufen
+        if (radius <= 0) return true; // Radius check disabled, block if time has not yet expired
 
-        // Prüfe, ob die Interaktionsposition innerhalb des Todesradius liegt
+        // Check if the interaction position is within the death radius
         double distanceSq = deathLocation.getSquaredDistance(interactionPos);
         boolean shouldBlock = distanceSq <= radius * radius;
-        if (!shouldBlock) deathLocation = null; // Setze Todesort zurück, wenn außerhalb des Radius für diesen Interaktionsversuch
+        if (!shouldBlock) deathLocation = null; // Reset death location if outside the radius for this interaction attempt
         return shouldBlock;
     }
 }

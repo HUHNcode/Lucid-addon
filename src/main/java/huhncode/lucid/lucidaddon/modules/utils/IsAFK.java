@@ -12,16 +12,16 @@ public class IsAFK {
         if (mc.player == null) return false;
 
         Vec3d currentPos = mc.player.getPos();
-        // Prüfen, ob sich der Spieler bewegt hat
+        // Check if the player has moved
         if (!currentPos.equals(lastPos)) {
             lastPos = currentPos;
             lastMoveTime = System.currentTimeMillis();
         }
-        // AFK, wenn die Zeit seit der letzten Bewegung überschritten wurde
+        // AFK if the time since the last movement has been exceeded
         return System.currentTimeMillis() - lastMoveTime > afkTimeMs;
     }
     
-    // Setzt den AFK-Zustand zurück (wird beim Join verwendet)
+    // Resets the AFK state (used on join)
     public static void reset() {
         if (mc.player != null) {
             lastPos = mc.player.getPos();

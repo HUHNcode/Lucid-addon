@@ -22,29 +22,29 @@ public class ChatBot extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     private static final Path CONFIG_PATH = MeteorClient.FOLDER.toPath().resolve("Lucid/ChatBot.config");
 
-    // Regex zum Extrahieren von Spieler und Nachricht (Platzhalter PLAYER wird ersetzt)
+    // Regex to extract player and message (PLAYER placeholder is replaced)
     private final Setting<String> messageRegex = sgGeneral.add(new StringSetting.Builder()
             .name("Message regex")
-            .description("Regex zum Extrahieren von Spieler und Nachricht. Alles nach dem Match wird als Nachricht behandelt. Verwende 'PLAYER' als Platzhalter.")
+            .description("Regex to extract player and message. Everything after the match is treated as the message. Use 'PLAYER' as a placeholder.")
             .defaultValue("<PLAYER>\\s")
             .build()
     );
 
-    // Verzögerung, bevor die Antwort gesendet wird (in Sekunden)
+    // Delay before the response is sent (in seconds)
     private final Setting<Double> msgDelay = sgGeneral.add(new DoubleSetting.Builder()
             .name("Message delay")
-            .description("Verzögerung (in Sekunden), bis die Antwort gesendet wird.")
+            .description("Delay (in seconds) until the response is sent.")
             .defaultValue(1.5)
             .min(0)
             .sliderMax(10)
             .build()
     );
 
-    // Verzögerung, die verhindert, dass dieselbe Bot-Nachricht an denselben Spieler erneut gesendet wird
-    // Range: 0s (deaktiviert) bis 300s (5 Minuten), Standard: 10s.
+    // Delay that prevents the same bot message from being sent to the same player again
+    // Range: 0s (disabled) to 300s (5 minutes), Default: 10s.
     private final Setting<Double> duplicateDelay = sgGeneral.add(new DoubleSetting.Builder()
             .name("Duplicate prevention delay")
-            .description("Mindestzeit (in Sekunden), die zwischen dem Senden derselben Bot-Nachricht an denselben Spieler liegen muss. 0 deaktiviert diese Überprüfung.")
+            .description("Minimum time (in seconds) that must pass between sending the same bot message to the same player. 0 disables this check.")
             .defaultValue(10.0)
             .min(0)
             .sliderMax(300)
@@ -53,45 +53,45 @@ public class ChatBot extends Module {
 
     private final Setting<List<String>> neededKeywords = sgGeneral.add(new StringListSetting.Builder()
             .name("Needed keywords")
-            .description("Die Nachricht muss mindestens eines dieser Wörter enthalten.")
+            .description("The message must contain at least one of these words.")
             .defaultValue(List.of("buy"))
             .build()
     );
 
     private final Setting<List<String>> forbiddenKeywords = sgGeneral.add(new StringListSetting.Builder()
             .name("Forbidden keywords")
-            .description("Nachrichten, die diese Wörter enthalten, werden ignoriert.")
+            .description("Messages containing these words will be ignored.")
             .defaultValue(List.of("sell"))
             .build()
     );
 
     private final Setting<Boolean> smartMode = sgGeneral.add(new BoolSetting.Builder()
             .name("Smart keyword detection")
-            .description("Wenn aktiviert, wird nach einem Item nur nach einem 'needed keyword' (bis zu einem 'forbidden keyword') gesucht.")
+            .description("When enabled, an item is only searched for after a 'needed keyword' (up to a 'forbidden keyword').")
             .defaultValue(true)
             .build()
     );
 
-    // Einstellung für die Ausgabe-Nachricht, mit Platzhaltern TRIGGER und OUTPUT.
+    // Setting for the output message, with placeholders TRIGGER and OUTPUT.
     private final Setting<String> customOutputMessage = sgGeneral.add(new StringSetting.Builder()
             .name("Custom output message")
-            .description("Passe das Nachrichtenformat an. Verwende Platzhalter TRIGGER und OUTPUT. Der Nachrichtenprefix (z.B. '/msg PLAYER') kann ebenfalls angepasst werden.")
+            .description("Customize the message format. Use placeholders TRIGGER and OUTPUT. The message prefix (e.g., '/msg PLAYER') can also be adjusted.")
             .defaultValue("/msg PLAYER i am selling TRIGGER for OUTPUT")
             .build()
     );
 
     private final Setting<List<String>> itemData = sgGeneral.add(new StringListSetting.Builder()
             .name("Trigger and outputs")
-            .description("Format: \"trigger1,trigger2;output\". Keine Standardwerte.")
+            .description("Format: \"trigger1,trigger2;output\". No default values.")
             .defaultValue(loadItemData())
             .build()
     );
 
-    // Map, um für jede Kombination aus Spieler und Nachricht den letzten Sendezeitpunkt zu speichern
+    // Map to store the last send time for each combination of player and message
     private final Map<String, Long> lastSentTimes = new HashMap<>();
 
     public ChatBot() {
-        super(LucidAddon.CATEGORY, "ChatBot", "Erkennt Chatnachrichten und antwortet basierend auf konfigurierbaren Regex-Mustern.");
+        super(LucidAddon.CATEGORY, "ChatBot", "Detects chat messages and responds based on configurable regex patterns.");
     }
 
     @EventHandler
@@ -104,30 +104,30 @@ public class ChatBot extends Module {
             String word = extractedInfo.getValue().getKey();
             String price = extractedInfo.getValue().getValue();
 
-            // Erzeuge die Ausgabe-Nachricht mithilfe des benutzerdefinierten Formats
+            // Generate the output message using the custom format
             String outputMessage = customOutputMessage.get()
                     .replace("PLAYER", sender)
                     .replace("TRIGGER", word)
                     .replace("OUTPUT", price);
 
-            // Duplicate Prevention: Überprüfe, ob dieselbe Nachricht an den selben Spieler kürzlich gesendet wurde
+            // Duplicate Prevention: Check if the same message was recently sent to the same player
             if (duplicateDelay.get() > 0) {
                 long now = System.currentTimeMillis();
                 String key = sender + "_" + outputMessage;
                 if (lastSentTimes.containsKey(key) && now - lastSentTimes.get(key) < duplicateDelay.get() * 1000) {
-                    // Überspringe das Senden, wenn die Mindestzeit noch nicht verstrichen ist
+                    // Skip sending if the minimum time has not yet passed
                     return;
                 }
                 lastSentTimes.put(key, now);
             }
 
-            // Zeige einen Toast an und spiele einen Sound ab
+            // Show a toast and play a sound
             mc.execute(() -> {
                 mc.getToastManager().add(new SystemToast(SystemToast.Type.PERIODIC_NOTIFICATION, Text.of(sender), Text.of(outputMessage)));
                 mc.player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
             });
 
-            // Sende die Nachricht nach Ablauf der msgDelay-Zeit
+            // Send the message after the msgDelay time has elapsed
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

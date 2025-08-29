@@ -19,10 +19,10 @@ import java.util.List;
 public class InstantCrystalBreaker extends Module {
     private final SettingGroup sgGeneral = settings.getDefaultGroup();
     
-    // Einstellungen für das Delay
+    // Settings for the delay
     private final Setting<Integer> delaySetting = sgGeneral.add(new IntSetting.Builder()
             .name("delay")
-            .description("Delay in Millisekunden für den Angriff.")
+            .description("Delay in milliseconds for the attack.")
             .defaultValue(50)
             .min(0)
             .max(500)
@@ -34,15 +34,15 @@ public class InstantCrystalBreaker extends Module {
         super(LucidAddon.CATEGORY, "End Crystal Delay", "Delay attacks on End Crystals.");
     }
 
-    // Fängt die Pakete ab, die an den Server gesendet werden
+    // Intercepts packets sent to the server
     @EventHandler
     private void onPacketSend(PacketEvent.Send event) {
         if (event.packet instanceof PlayerInteractEntityC2SPacket packet) {
-            // Wenn der angegriffene Gegenstand ein Ender Crystal ist
+            // If the attacked item is an End Crystal
             if (isEndCrystal(packet.())) {
-                event.cancel(); // Paket blockieren
+                event.cancel(); // Block packet
 
-                // Füge den Angriff zur Warteschlange hinzu
+                // Add the attack to the queue
                 attackQueue.add(new QueuedAttack(packet, System.currentTimeMillis()));
                 removeEndCrystal(packet.getEntityId());
                 spawnFakeEndCrystal(packet.getEntityId());
@@ -50,41 +50,41 @@ public class InstantCrystalBreaker extends Module {
         }
     }
 
-    // Entferne den echten Ender Crystal clientseitig
+    // Remove the real End Crystal client-side
     private void removeEndCrystal(int entityId) {
         if (mc.world != null && mc.world.getEntityById(entityId) instanceof EndCrystalEntity crystal) {
             crystal.remove(Entity.RemovalReason.KILLED);
         }
     }
 
-    // Erzeuge einen Fake-Ender Crystal
+    // Create a fake End Crystal
     private void spawnFakeEndCrystal(int entityId) {
         EndCrystalEntity fakeCrystal = new EndCrystalEntity(mc.world);
         fakeCrystal.setPosition(new Vec3f(mc.world.getEntityById(entityId).getX(), mc.world.getEntityById(entityId).getY(), mc.world.getEntityById(entityId).getZ()));
         fakeCrystal.setCustomName(new LiteralText("FAKE_CRYSTAL"));
-        mc.world.addEntity(entityId + 1000, fakeCrystal); // Sicherstellen, dass ID-Kollision verhindert wird
+        mc.world.addEntity(entityId + 1000, fakeCrystal); // Ensure ID collision is prevented
     }
 
-    // Bearbeiten Sie die Warteschlange im Tick-Event
+    // Process the queue in the tick event
     @EventHandler
     private void onTick(TickEvent.Post event) {
         long currentTime = System.currentTimeMillis();
         attackQueue.removeIf(queuedAttack -> {
             if (currentTime - queuedAttack.timestamp >= delaySetting.get()) {
-                // Senden des Attack-Pakets an den Server
+                // Send the attack packet to the server
                 mc.getNetworkHandler().sendPacket(queuedAttack.packet);
-                return true; // Entfernen aus der Queue
+                return true; // Remove from the queue
             }
-            return false; // Behalte in der Warteschlange
+            return false; // Keep in the queue
         });
     }
 
-    // Überprüfen, ob die angegriffene Entity ein Ender Crystal ist
+    // Check if the attacked entity is an End Crystal
     private boolean isEndCrystal(int entityId) {
         return mc.world.getEntityById(entityId) instanceof EndCrystalEntity;
     }
 
-    // Klasse für wartende Angriffe
+    // Class for queued attacks
     private static class QueuedAttack {
         final PlayerInteractEntityC2SPacket packet; 
         final long timestamp;

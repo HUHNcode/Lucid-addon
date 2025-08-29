@@ -39,7 +39,7 @@ public class NBTStream extends Module {
             if (oldNbt == null) {
                 return "NBT initialized: " + newNbt;
             } else if (newNbt == null) {
-                return "NBT removed"; // Shouldn't really happen, but just in case
+                return "NBT removed"; // Sollte eigentlich nicht passieren, aber zur Sicherheit
             } else {
                 List<String> changes = new ArrayList<>();
                 for (String key : newNbt.getKeys()) {
@@ -61,10 +61,10 @@ public class NBTStream extends Module {
     private final SettingGroup sgChat = settings.createGroup("Chat");
     private final SettingGroup sgFilter = settings.createGroup("Filter");
 
-    // Render Settings (identical to ChangingBlockStateESP)
+    // Render Settings (identisch zu ChangingBlockStateESP)
     private final Setting<Integer> renderTime = sgRender.add(new IntSetting.Builder()
         .name("render-time")
-        .description("How long the box should be rendered in ticks.")
+        .description("Wie lange die Box in Ticks gerendert werden soll.")
         .defaultValue(40)
         .min(1)
         .sliderMax(200)
@@ -73,21 +73,21 @@ public class NBTStream extends Module {
 
     private final Setting<ShapeMode> shapeMode = sgRender.add(new EnumSetting.Builder<ShapeMode>()
         .name("shape-mode")
-        .description("How the box should be rendered.")
+        .description("Wie die Box gerendert werden soll.")
         .defaultValue(ShapeMode.Both)
         .build()
     );
 
     private final Setting<SettingColor> sideColor = sgRender.add(new ColorSetting.Builder()
         .name("side-color")
-        .description("The color of the sides of the box.")
-        .defaultValue(new SettingColor(255, 255, 0, 75)) // Yellow as default
+        .description("Die Farbe der Seiten der Box.")
+        .defaultValue(new SettingColor(255, 255, 0, 75)) // Gelb als Standard
         .build()
     );
 
     private final Setting<SettingColor> lineColor = sgRender.add(new ColorSetting.Builder()
         .name("line-color")
-        .description("The color of the lines of the box.")
+        .description("Die Farbe der Linien der Box.")
         .defaultValue(new SettingColor(255, 255, 0, 255))
         .build()
     );
@@ -107,10 +107,10 @@ public class NBTStream extends Module {
         .build()
     );
 
-    // Chat Settings (identical to ChangingBlockStateESP)
+    // Chat Settings (identisch zu ChangingBlockStateESP)
     private final Setting<Boolean> logToChat = sgChat.add(new BoolSetting.Builder()
         .name("log-to-chat")
-        .description("Outputs the NBT change in chat.")
+        .description("Gibt die NBT-Änderung im Chat aus.")
         .defaultValue(true)
         .build()
     );
@@ -130,7 +130,7 @@ public class NBTStream extends Module {
         .name("blacklist")
         .description("Do not show NBT changes for blocks in this list.")
         .defaultValue(Arrays.asList(
-            // Add default blacklist entries here if desired.
+            // Füge hier Standard-Blacklist-Einträge hinzu, falls gewünscht.
         ))
         .build()
     );

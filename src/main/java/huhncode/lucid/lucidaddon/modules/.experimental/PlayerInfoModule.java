@@ -1,7 +1,7 @@
 package huhncode.lucid.lucidaddon.modules;
 
 import huhncode.lucid.lucidaddon.LucidAddon;
-import huhncode.lucid.lucidaddon.ui.PlayerInfoDisplay; // Import der UI-Anzeigeklasse
+import huhncode.lucid.lucidaddon.ui.PlayerInfoDisplay; // Import of the UI display class
 import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.settings.SettingGroup;
 import meteordevelopment.meteorclient.settings.StringSetting;
@@ -23,15 +23,15 @@ public class PlayerInfoModule extends Module {
     );
 
     public PlayerInfoModule() {
-        super(LucidAddon.CATEGORY, "player-info", "Zeigt eine GUI mit Informationen zu einem bestimmten Spieler an.");
+        super(LucidAddon.CATEGORY, "player-info", "Displays a GUI with information about a specific player.");
     }
 
     @Override
     public void onActivate() {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc.player == null || mc.world == null || playerName.get().isEmpty()) {
-            ChatUtils.error("Spieler oder Welt nicht geladen.");
-            toggle(); // Deaktiviere das Modul, wenn die GUI nicht geöffnet werden kann
+            ChatUtils.error("Player or world not loaded.");
+            toggle(); // Deactivate the module if the GUI cannot be opened
             return;
         }
 
@@ -44,19 +44,19 @@ public class PlayerInfoModule extends Module {
         }
 
         if (targetPlayer == null) {
-            ChatUtils.error("Spieler '" + playerName.get() + "' nicht gefunden.");
+            ChatUtils.error("Player '" + playerName.get() + "' not found.");
             toggle();
             return;
         }
 
         PlayerInfoDisplay.show(targetPlayer);
 
-        // Deaktiviere das Modul sofort, nachdem die GUI angezeigt wurde (One-Shot-Aktion)
+        // Deactivate the module immediately after the GUI is displayed (one-shot action)
         toggle();
     }
 
     @Override
     public void onDeactivate() {
-        // Nichts zu tun hier, da das Modul sich selbst deaktiviert.
+        // Nothing to do here, as the module deactivates itself.
     }
 }

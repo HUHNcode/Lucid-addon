@@ -6,12 +6,11 @@
 -   [x] Module: AFK Kick
 -   [x] Auto Totem + (Random Delay to Prevent Anti-Cheat)
 -   [x] Chat Bot: Add Config File for Triggers + Outputs
--   [x] enderport locator (per enderpearls)
--   [x] doubble commands (use "&&" do do mulitible comands: "/kit && /rtp")
-    -   [ ] add meteor commands
+-   [x] Stronghold locator (per ender pearls)
+-   [x] Double commands (use "&&" to do multiple commands: "/kit && /rtp")
+    -   [x] add meteor commands
 -   [x] No Item Destroy Module (CPvP)
-    -   [ ] limet crytal speed on ping
-    -   [ ] maby crystal block over item finding
+-   -   [ ] Limit crystal speed on ping
 -   [x] Module: Better Macros (Cursor Position)
 -   [x] /info Command Module (Armor Info)
 
@@ -25,20 +24,18 @@
 -   [ ] ESP Module That Shows Landing Spot of Other Players' Pearls (Prediction)
 -   [ ] Hold Key Module
 -   [ ] Walk Slow Module
--   [ ] McTires befor name module (https://mctiers.com/api/search_profile/{player})
+-   [ ] McTiers before name module (https://mctiers.com/api/search_profile/{player})
 -   [ ] Full block hitbox place (stairs, slabs, fence)
--   [ ] more cps (lucidbounce cps pettern)
--   [ ] anti server resurs pack
--   [ ] better keybinds in better macros (ex. xray brute force)
--   [ ] Changin Block data esp
+-   [ ] More CPS (lucidbounce cps pattern) / double click module
+-   [ ] Better keybinds in Better Macros (ex. xray brute force)
 
 ## To Fix
 
--   [x] Afk log start afk timer after first enabling the module
--   [x] Auto gg, better kill identifier (kill effect module)
--   [ ] Auto tot plus, still detectable
--   [x] Chat fonts, dose not apply if there is a space after the $f
--   [x] multi command: multiple /msg don't work
--   [x] multi command: delay delays main thread (game freezes)
--   [x] Fix kill detection on no item destroy (kill effect module)
--   [ ] ChatFonts in /msg
+-   [x] AFK Log: Timer starts immediately after first enabling the module
+-   [x] Auto GG: Better kill identifier (kill effect module)
+-   [ ] Auto Totem+: Still detectable
+-   [x] Chat Fonts: Does not apply if there is a space after the $f
+-   [x] Multi Command: Multiple /msg don't work
+-   [x] Multi Command: Delay freezes the main thread (game freezes)
+-   [x] Fix kill detection on No Item Destroy (kill effect module)
+-   [ ] ChatFonts in /msg commands
